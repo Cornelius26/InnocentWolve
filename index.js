@@ -41,7 +41,14 @@ const getInteractions = (userPath) => {
 };
 
 getInteractions('commands');
-
+/*
+* client is your discord.js Client
+* commands obj is your command data you want to add to the guild
+*/
+client.on('guildCreate', async (guild) => {
+	guild.commands.set(client.commands).then(() =>
+		console.log(`Commands deployed in guild ${guild.name}!`));
+});
 
 
 client.on(Events.InteractionCreate, async interaction => {
