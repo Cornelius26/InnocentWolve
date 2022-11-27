@@ -6,10 +6,7 @@ import { createCanvas, loadImage, GlobalFonts } from '@napi-rs/canvas';
 import { checkAccessRight } from '../../accessManager.js';
 import { getUserById } from '../../wolvesVille/WolvesVilleRequests.js';
 
-if (process.env.ENVIROMENT == 'production') {
-	GlobalFonts.registerFromPath('~/.fonts/NotoColorEmoji-Regular.ttf', 'Google Emoji');
-	console.info(GlobalFonts.families);
-}
+
 
 /**
  * Create Command to Show Profile
@@ -94,13 +91,13 @@ const profileImage = async (clanMember, wolvesvilleMemberData) => {
 			context.strokeStyle = '#000000';
 			context.font = '70px sans-serif';
 			if (process.env.ENVIROMENT == 'production') {
-				context.font = '70px Google Emoji';
+				context.font = '70px Noto Color Emoji';
 			}
 			context.fillStyle = '#ffffff';
 			context.fillText(wolvesvilleMemberData.username, image.width + 20, 80);
 			context.font = '50px sans-serif';
 			if (process.env.ENVIROMENT == 'production') {
-				context.font = '50px Google Emoji';
+				context.font = '50px Noto Color Emoji';
 			}
 			context.fillText('💰', image.width + 20, 150);
 			context.fillText('💎', image.width + 20, 210);
@@ -108,7 +105,7 @@ const profileImage = async (clanMember, wolvesvilleMemberData) => {
 			context.fillText('Current Gem Balance ' + clanMember.gemsBalance.toString(), image.width + 100, 210);
 			context.font = '40px sans-serif';
 			if (process.env.ENVIROMENT == 'production') {
-				context.font = '40px Google Emoji';
+				context.font = '40px Noto Color Emoji';
 			}
 			context.fillText('💰', image.width + 20 + 15, 270);
 			context.fillText('💎', image.width + 20 + 15, 320);
