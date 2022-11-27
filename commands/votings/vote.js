@@ -3,16 +3,16 @@ import {
 	AttachmentBuilder,
 	ButtonBuilder,
 	ButtonStyle,
-	SelectMenuBuilder,
 	SlashCommandBuilder,
 } from 'discord.js';
-import { getMember } from '../../MongoRequests/clanMembers.js';
-import { getClanMembers, getWolvesvilleClan } from '../../wolvesVille/WolvesVilleRequests.js';
-import { getClan, setColeaderAccess } from '../../MongoRequests/clans.js';
 import { addUpdateVoting, getLastVoting } from '../../MongoRequests/clanVotings.js';
-import { createCanvas, loadImage } from '@napi-rs/canvas';
-import axios from 'axios';
+import { createCanvas, loadImage, GlobalFonts } from '@napi-rs/canvas';
 import { checkAccessRight } from '../../accessManager.js';
+import { join } from 'path';
+
+if (process.env.ENVIROMENT == 'production') {
+	GlobalFonts.registerFromPath(join(__dirname, '..', 'NotoColorEmoji-Regular.ttf'), 'Google Emoji');
+}
 
 export const data = new SlashCommandBuilder()
 	.setName('vote')
@@ -44,8 +44,7 @@ export const execute = async (interaction) => {
 				interaction.editReply({ content: 'You have no access to this command.', ephemeral: true });
 			}
 		});
-	}
-	catch (e) {
+	} catch (e) {
 		console.log(e);
 		interaction.editReply({
 			content: 'You have no access to the bot or a internal error accured.',
@@ -176,15 +175,20 @@ const votingOverviewImage = async (clanVotings, userId) => {
 	// context.arc(125, 125, 100, 0, Math.PI * 2, true);
 	// context.closePath();
 	// context.clip();
-
 	for (const image in images) {
 		context.drawImage(images[image], 0, images[image].height * image, images[image].width, images[image].height);
 		context.strokeStyle = '#000000';
 		context.strokeRect(0, images[image].height * image, images[image].width, images[image].width);
 		context.font = '30px sans-serif';
+		if (process.env.ENVIROMENT == 'production') {
+			context.font = '30px Google Emoji';
+		}
 		context.fillStyle = '#ffffff';
 		context.fillText(names[image], images[image].width + 20, images[image].height * image + images[image].height / 2 - 80);
 		context.font = '20px sans-serif';
+		if (process.env.ENVIROMENT == 'production') {
+			context.font = '30px Google Emoji';
+		}
 		context.fillText((gemQuest[image] ? '💎 Gem Quest' : '💰 Gold Quest'), images[image].width + 20, images[image].height * image + images[image].height / 2 - 50);
 		context.fillText('Number of Votes for this Quest: ' + numberOfVotes[image], images[image].width + 20, images[image].height * image + images[image].height / 2 - 10);
 		context.fillText('You Voted: ' + (userVote[image] ? '✔' : '❌'), images[image].width + 20, images[image].height * image + images[image].height / 2 + 40);
@@ -219,7 +223,7 @@ const response = async (interaction, clanVotings, userData) => {
 
 	collector.on('collect', async i => {
 		await i.deferUpdate({ ephemeral: true });
-		//i.editReply({ content: 'loading...', files: [], components: [], ephemeral: true });
+		// i.editReply({ content: 'loading...', files: [], components: [], ephemeral: true });
 		for (const questOption of clanVotings.questOptions) {
 
 			if (i.customId.split(':')[0] == questOption.id) {
@@ -266,7 +270,7 @@ const response = async (interaction, clanVotings, userData) => {
 					interaction.editReply({
 						content: 'Here you can vote for the current quest. With 🗳 you vote for the quest. With 👍 you like to participate in the Quest.\n' +
 							'You do not have enough balance to join this quest.',
-						files: [], components: [], ephemeral: true
+						files: [], components: [], ephemeral: true,
 					});
 				}
 			}
