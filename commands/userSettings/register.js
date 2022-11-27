@@ -74,7 +74,6 @@ const checkUserRegisterState = async (interaction, username) => {
 			return getClan(wolvesVilleUserdata.body.clanId).then(clandata => {
 
 				if (clandata.guildId === undefined) {
-					console.log("b")
 					if (wolvesVilleClanData.body.leaderId == wolvesVilleUserdata.body.id) {
 						return setClanDiscordId(wolvesVilleUserdata.body.clanId, interaction.guildId).then(d => {
 							return ['leaderRegisteredClan', clandata._id, wolvesVilleUserdata.body.id];
@@ -100,7 +99,6 @@ const checkUserRegisterState = async (interaction, username) => {
 					}
 				}
 				else {
-					console.log("Y")
 					return ['newUser', clandata._id, wolvesVilleUserdata.body.id];
 				}
 			}).catch(errCatch);

@@ -45,22 +45,37 @@ export const getMemberByDiscordId = async (id) => {
 	});
 };
 export const createMember = async (userID, localClanId, discordId) => {
-	const authCode = cryptoRandomString({ length: 6, type: 'distinguishable' });
-	const newMember = new ClanMembers({
-		wolvesvilleId: userID,
-		authenticationDiscordID: discordId,
-		clanId: localClanId,
-		authenticationCode: authCode,
-		authenticationCodeValidUntil: new Date().setDate(new Date().getDate() + parseInt(CodeValidDays)),
+	return ClanMembers.findOne({ wolvesvilleId: userID }).exec().then(d => {
+		return ClanMembers.findOne({ discordId: discordId }).exec.then(check => {
+			if (check != null) {
+				throw new Error('discordId already taken');
+			}
+			if (d != null) {
+				if (d.discordId == undefined) {
+					d.remove();
+				}
+				else {
+					throw new Error('already registered');
+				}
+			}
+			const authCode = cryptoRandomString({ length: 6, type: 'distinguishable' });
+			const newMember = new ClanMembers({
+				wolvesvilleId: userID,
+				authenticationDiscordID: discordId,
+				clanId: localClanId,
+				authenticationCode: authCode,
+				authenticationCodeValidUntil: new Date().setDate(new Date().getDate() + parseInt(CodeValidDays)),
+			});
+			try {
+				newMember.save();
+				return authCode;
+			} catch (err) {
+				throw new Error(err);
+			}
+		});
 	});
-	try {
-		await newMember.save();
-		return authCode;
-	}
-	catch (err) {
-		throw new Error(err);
-	}
 };
+
 // create Member
 // returns pin
 
