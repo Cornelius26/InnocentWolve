@@ -7,7 +7,13 @@ import { createCanvas, loadImage, GlobalFonts } from '@napi-rs/canvas';
 import { checkAccessRight } from '../../accessManager.js';
 import { getUserById } from '../../wolvesVille/WolvesVilleRequests.js';
 import { join } from 'path';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+
 const __dirname = path.dirname(__filename);
+
 if (process.env.ENVIROMENT == 'production') {
 	GlobalFonts.registerFromPath(join(__dirname, '..', 'NotoColorEmoji-Regular.ttf'), 'Google Emoji');
 }
