@@ -7,6 +7,7 @@ import { fileURLToPath } from 'url';
 
 import schedule from 'node-schedule';
 import allJobs from './jobs.js';
+import { global_command_deploy } from './deploy-commands_global.js';
 
 const __filename = fileURLToPath(import.meta.url);
 
@@ -34,13 +35,6 @@ const getInteractions = async (userPath) => {
 		import('file://' + filePath).then((command) => {
 			console.log(command.data.name);
 			client.commands.set(command.data.name, command);
-			if (process.env.ENVIROMENT == 'production') {
-				rest.put(
-					Routes.applicationCommands(process.env.CLIENT_ID),
-					{ body: client.commands },
-				);
-				console.log('Commands Deployed');
-			}
 		});
 		// Set a new item in the Collection with the key as the command name and the value as the exported module
 	}
@@ -52,6 +46,11 @@ const getInteractions = async (userPath) => {
 };
 
 getInteractions('commands');
+if (process.env.ENVIROMENT == 'production') {
+	global_command_deploy().then(() => {
+		console.log('Commands Deployed');
+	});
+}
 
 /*
 * client is your discord.js Client
