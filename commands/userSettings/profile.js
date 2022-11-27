@@ -8,6 +8,7 @@ import { getUserById } from '../../wolvesVille/WolvesVilleRequests.js';
 
 if (process.env.ENVIROMENT == 'production') {
 	GlobalFonts.registerFromPath('~/.fonts/NotoColorEmoji-Regular.ttf', 'Google Emoji');
+	console.info(GlobalFonts.families);
 }
 
 /**
@@ -53,7 +54,8 @@ export const execute = async (interaction) => {
 				interaction.editReply({ content: 'You have no access to this command.', ephemeral: true });
 			}
 		});
-	} catch (e) {
+	}
+	catch (e) {
 		console.log(e);
 		interaction.editReply({
 			content: 'You have no access to the bot or a internal error accured.',
@@ -70,58 +72,58 @@ export const execute = async (interaction) => {
  */
 const profileImage = async (clanMember, wolvesvilleMemberData) => {
 
-		const url = wolvesvilleMemberData.equippedAvatar.url.slice(0, -4) + '@3x' + wolvesvilleMemberData.equippedAvatar.url.slice(-4);
-		console.log(url);
-		return loadImage(url).then(image => {
-			return loadImage('https://cdn.wolvesville.com/backgrounds/wolvesville_large_day.wide@2x.png').then(backgroundimage => {
-				const neededHeight = image.height;
-				const maxWidthImages = image.width;
+	const url = wolvesvilleMemberData.equippedAvatar.url.slice(0, -4) + '@3x' + wolvesvilleMemberData.equippedAvatar.url.slice(-4);
+	console.log(url);
+	return loadImage(url).then(image => {
+		return loadImage('https://cdn.wolvesville.com/backgrounds/wolvesville_large_day.wide@2x.png').then(backgroundimage => {
+			const neededHeight = image.height;
+			const maxWidthImages = image.width;
 
 
-				const canvas = createCanvas(maxWidthImages * 3, neededHeight);
+			const canvas = createCanvas(maxWidthImages * 3, neededHeight);
 
-				const context = canvas.getContext('2d');
-				context.fillStyle = '#e2e2e2';
-				context.fillRect(0, 0, canvas.width, canvas.height);
-				context.drawImage(backgroundimage, -20, (canvas.height - backgroundimage.height) / 2, backgroundimage.width, backgroundimage.height);
-				context.fillStyle = 'rgba(24,24,24,0.4)';
-				context.fillRect(image.width, 0, canvas.width - image.width, canvas.height);
-				context.fillStyle = '#ffffff';
-				// context.fillRect(1, 1, image.width, image.height);
-				context.drawImage(image, 0, 0, image.width, image.height);
-				context.strokeStyle = '#000000';
-				context.font = '70px sans-serif';
-				if (process.env.ENVIROMENT == 'production') {
-					context.font = '70px Google Emoji';
-				}
-				context.fillStyle = '#ffffff';
-				context.fillText(wolvesvilleMemberData.username, image.width + 20, 80);
-				context.font = '50px sans-serif';
-				if (process.env.ENVIROMENT == 'production') {
-					context.font = '50px Google Emoji';
-				}
-				context.fillText('💰', image.width + 20, 150);
-				context.fillText('💎', image.width + 20, 210);
-				context.fillText('Current Gold Balance ' + clanMember.goldBalance.toString(), image.width + 100, 150);
-				context.fillText('Current Gem Balance ' + clanMember.gemsBalance.toString(), image.width + 100, 210);
-				context.font = '40px sans-serif';
-				if (process.env.ENVIROMENT == 'production') {
-					context.font = '40px Google Emoji';
-				}
-				context.fillText('💰', image.width + 20 + 15, 270);
-				context.fillText('💎', image.width + 20 + 15, 320);
-				context.fillText('Total Gold Donated ' + clanMember.goldDonated.toString(), image.width + 100, 270);
-				context.fillText('Total Gems Donated ' + clanMember.gemsDonated.toString(), image.width + 100, 320);
+			const context = canvas.getContext('2d');
+			context.fillStyle = '#e2e2e2';
+			context.fillRect(0, 0, canvas.width, canvas.height);
+			context.drawImage(backgroundimage, -20, (canvas.height - backgroundimage.height) / 2, backgroundimage.width, backgroundimage.height);
+			context.fillStyle = 'rgba(24,24,24,0.4)';
+			context.fillRect(image.width, 0, canvas.width - image.width, canvas.height);
+			context.fillStyle = '#ffffff';
+			// context.fillRect(1, 1, image.width, image.height);
+			context.drawImage(image, 0, 0, image.width, image.height);
+			context.strokeStyle = '#000000';
+			context.font = '70px sans-serif';
+			if (process.env.ENVIROMENT == 'production') {
+				context.font = '70px Google Emoji';
+			}
+			context.fillStyle = '#ffffff';
+			context.fillText(wolvesvilleMemberData.username, image.width + 20, 80);
+			context.font = '50px sans-serif';
+			if (process.env.ENVIROMENT == 'production') {
+				context.font = '50px Google Emoji';
+			}
+			context.fillText('💰', image.width + 20, 150);
+			context.fillText('💎', image.width + 20, 210);
+			context.fillText('Current Gold Balance ' + clanMember.goldBalance.toString(), image.width + 100, 150);
+			context.fillText('Current Gem Balance ' + clanMember.gemsBalance.toString(), image.width + 100, 210);
+			context.font = '40px sans-serif';
+			if (process.env.ENVIROMENT == 'production') {
+				context.font = '40px Google Emoji';
+			}
+			context.fillText('💰', image.width + 20 + 15, 270);
+			context.fillText('💎', image.width + 20 + 15, 320);
+			context.fillText('Total Gold Donated ' + clanMember.goldDonated.toString(), image.width + 100, 270);
+			context.fillText('Total Gems Donated ' + clanMember.gemsDonated.toString(), image.width + 100, 320);
 
 
-				return new AttachmentBuilder(canvas.toBuffer('image/png'), { name: 'profile-image.png' });
-
-			});
+			return new AttachmentBuilder(canvas.toBuffer('image/png'), { name: 'profile-image.png' });
 
 		});
 
+	});
 
-	}
+
+}
 ;
 
 /**
