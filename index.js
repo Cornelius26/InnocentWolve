@@ -22,7 +22,7 @@ client.commands = new Collection();
 const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
 
 
-const getInteractions = (userPath) => {
+const getInteractions = async (userPath) => {
 	console.log(userPath);
 	const commandsPath = path.join(__dirname, userPath);
 	const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
@@ -39,19 +39,20 @@ const getInteractions = (userPath) => {
 		// Set a new item in the Collection with the key as the command name and the value as the exported module
 	}
 	console.log(commandDirectories);
-	if (process.env.ENVIROMENT == 'production') {
-		rest.put(
-			Routes.applicationCommands(process.env.CLIENT_ID),
-			{ body: client.commands },
-		);
-		console.log('Commands Deployed');
-	}
+
 	for (const dir of commandDirectories) {
 		getInteractions(userPath + '/' + dir);
 	}
 };
 
-getInteractions('commands');
+await getInteractions('commands');
+if (process.env.ENVIROMENT == 'production') {
+	rest.put(
+		Routes.applicationCommands(process.env.CLIENT_ID),
+		{ body: client.commands },
+	);
+	console.log('Commands Deployed');
+}
 /*
 * client is your discord.js Client
 * commands obj is your command data you want to add to the guild
