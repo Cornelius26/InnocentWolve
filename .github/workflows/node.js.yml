@@ -26,9 +26,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: yarn install --frozen-lockfile
-    - run: yarn build --if-present
-    - run: yarn run test:staging --if-present
+    #- run: yarn install --frozen-lockfile
+    #- run: yarn build --if-present
+    #- run: yarn run test:staging --if-present
     - name: SSH Remote Commands
       # You may pin to the exact commit or the version.
       # uses: appleboy/ssh-action@f9010ff7f1bbd7db1a0b4bab661437550cea20c0
