@@ -222,7 +222,7 @@ const checkQuestStart = async (clan, clanMembers, wolvesvilleClanMembers) => {
 		const clanHour = parseInt(clan.settings.autoQuestStartTime.slice(2, 4));
 		const clanMinute = parseInt(clan.settings.autoQuestStartTime.slice(5, 7)) - 10;
 		getLastVoting(clan._id).then(async voting => {
-			if (voting == null || voting.questStarted == false) {
+			if (voting != null && voting.questStarted == false) {
 				if (voting == null || voting.calenderWeek <= new Date().getWeekNumber()) {
 
 					if (clanDay < day ||
