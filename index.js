@@ -19,10 +19,6 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.commands = new Collection();
 
-// Construct and prepare an instance of the REST module
-const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
-
-let commandCollection = [];
 const getInteractions = async (userPath) => {
 	const commandsPath = path.join(__dirname, userPath);
 	const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
@@ -51,16 +47,6 @@ if (process.env.ENVIROMENT == 'production') {
 		console.log('Commands Deployed');
 	});
 }
-
-/*
-* client is your discord.js Client
-* commands obj is your command data you want to add to the guild
-*/
-//client.on('guildCreate', async (guild) => {
-//	console.log(guild);
-//	deployCommands(guild.id);
-//});
-
 
 client.on(Events.InteractionCreate, async interaction => {
 

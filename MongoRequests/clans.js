@@ -83,13 +83,13 @@ export const setAutomaticVoteEndTime = (guildId, field, time) => {
 	console.log('update');
 	return Clans.findOne({ guildId: guildId }).exec().then(foundClan => {
 		if (field == 0) {
-			foundClan.settings.autoVotingTimeStart = time.toString() + foundClan.settings.autoVotingTimeStart.slice(1);
+			foundClan.settings.autoVotingTimeEnd = time.toString() + foundClan.settings.autoVotingTimeEnd.slice(1);
 		}
 		else if (field == 1) {
-			foundClan.settings.autoVotingTimeStart = foundClan.settings.autoVotingTimeStart.slice(0, 2) + time.toString().padStart(2, '0') + foundClan.settings.autoVotingTimeStart.slice(4);
+			foundClan.settings.autoVotingTimeEnd = foundClan.settings.autoVotingTimeEnd.slice(0, 2) + time.toString().padStart(2, '0') + foundClan.settings.autoVotingTimeEnd.slice(4);
 		}
 		else if (field == 2) {
-			foundClan.settings.autoVotingTimeStart = foundClan.settings.autoVotingTimeStart.slice(0, 5) + time.toString().padStart(2, '0');
+			foundClan.settings.autoVotingTimeEnd = foundClan.settings.autoVotingTimeEnd.slice(0, 5) + time.toString().padStart(2, '0');
 		}
 
 		return foundClan.save();

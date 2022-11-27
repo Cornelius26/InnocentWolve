@@ -48,8 +48,8 @@ export const execute = async (interaction) => {
 
 };
 
-const voteStartTime = (startTime) => {
-	console.log(startTime);
+const voteStartTime = (endTime) => {
+	console.log(endTime);
 	const getOptions = (start, end, skips, defaultValue, type) => {
 		const day = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 		const options = [];
@@ -70,20 +70,20 @@ const voteStartTime = (startTime) => {
 			.addComponents(
 				new SelectMenuBuilder()
 					.setCustomId('dayStartTime')
-					.setPlaceholder(startTime.slice(0, 1))
-					.setOptions(getOptions(0, 6, 1, parseInt(startTime.slice(0, 1)), 'days')),
+					.setPlaceholder(endTime.slice(0, 1))
+					.setOptions(getOptions(0, 6, 1, parseInt(endTime.slice(0, 1)), 'days')),
 			),
 		new ActionRowBuilder().addComponents(
 			new SelectMenuBuilder()
 				.setCustomId('hourStartTime')
-				.setPlaceholder(startTime.slice(2, 4))
-				.setOptions(getOptions(0, 23, 1, parseInt(startTime.slice(2, 4)), 'Hour')),
+				.setPlaceholder(endTime.slice(2, 4))
+				.setOptions(getOptions(0, 23, 1, parseInt(endTime.slice(2, 4)), 'Hour')),
 		),
 		new ActionRowBuilder().addComponents(
 			new SelectMenuBuilder()
 				.setCustomId('minuteStartTime')
-				.setPlaceholder(startTime.slice(5, 7))
-				.setOptions(getOptions(0, 55, 5, parseInt(startTime.slice(5, 7)), 'Minute')),
+				.setPlaceholder(endTime.slice(5, 7))
+				.setOptions(getOptions(0, 55, 5, parseInt(endTime.slice(5, 7)), 'Minute')),
 		)];
 };
 
