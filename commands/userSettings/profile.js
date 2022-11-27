@@ -6,10 +6,6 @@ import { createCanvas, loadImage, GlobalFonts } from '@napi-rs/canvas';
 import { checkAccessRight } from '../../accessManager.js';
 import { getUserById } from '../../wolvesVille/WolvesVilleRequests.js';
 
-if (process.env.ENVIROMENT == 'production') {
-	console.log("load")
-	GlobalFonts.registerFromPath('~/NotoColorEmoji-Regular.ttf', 'Google Emoji');
-}
 
 /**
  * Create Command to Show Profile

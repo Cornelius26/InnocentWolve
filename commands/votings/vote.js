@@ -6,19 +6,9 @@ import {
 	SlashCommandBuilder,
 } from 'discord.js';
 import { addUpdateVoting, getLastVoting } from '../../MongoRequests/clanVotings.js';
-import { createCanvas, loadImage, GlobalFonts } from '@napi-rs/canvas';
+import { createCanvas, loadImage } from '@napi-rs/canvas';
 import { checkAccessRight } from '../../accessManager.js';
-import { join } from 'path';
-import path from 'path';
-import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-
-const __dirname = path.dirname(__filename);
-
-if (process.env.ENVIROMENT == 'production') {
-	GlobalFonts.registerFromPath(join(__dirname, '..', 'NotoColorEmoji-Regular.ttf'), 'Google Emoji');
-}
 
 export const data = new SlashCommandBuilder()
 	.setName('vote')
