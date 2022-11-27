@@ -108,7 +108,6 @@ export const getLedger = async (clanId) => {
 		.retry(10, [1000, 2000, 3000, 5000], [401, 404]);
 };
 export const setClanMemberParticipation = async (clanId, clanMemberId, participation) => {
-	console.log("hi")
 	return superagent
 		.put(URL + routes.clans.put.participateInQuest.replace(':0', clanId).replace(':1', clanMemberId))
 		.send({ participateInQuests: participation }) // sends a JSON post body
