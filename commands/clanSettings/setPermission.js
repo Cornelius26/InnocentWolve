@@ -39,8 +39,6 @@ export const execute = async (interaction) => {
 		checkAccessRight(interaction).then(rights => {
 			const access = rights[0];
 			const coLeaderAcess = rights[1];
-			console.log(access);
-			console.log(coLeaderAcess);
 			const userData = rights[2];
 			if (access == 'leader' || (access == 'coLeader' && coLeaderAcess)) {
 				userHasAccessResponse(interaction, userData.clanId);

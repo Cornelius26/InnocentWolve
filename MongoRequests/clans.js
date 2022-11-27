@@ -63,7 +63,6 @@ export const setAutomaticVoteStart = (guildId, enabled) => {
 	});
 };
 export const setAutomaticVoteStartTime = (guildId, field, time) => {
-	console.log('update');
 	return Clans.findOne({ guildId: guildId }).exec().then(foundClan => {
 		if (field == 0) {
 			foundClan.settings.autoVotingTimeStart = time.toString() + foundClan.settings.autoVotingTimeStart.slice(1);
@@ -80,7 +79,6 @@ export const setAutomaticVoteStartTime = (guildId, field, time) => {
 };
 
 export const setAutomaticVoteEndTime = (guildId, field, time) => {
-	console.log('update');
 	return Clans.findOne({ guildId: guildId }).exec().then(foundClan => {
 		if (field == 0) {
 			foundClan.settings.autoVotingTimeEnd = time.toString() + foundClan.settings.autoVotingTimeEnd.slice(1);

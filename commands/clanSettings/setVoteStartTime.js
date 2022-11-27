@@ -35,7 +35,6 @@ export const execute = async (interaction) => {
 		});
 	}
 	catch (e) {
-		console.log(e);
 		interaction.editReply({
 			content: 'You have no access to the bot or a internal error accured.',
 			ephemeral: true,
@@ -65,19 +64,19 @@ const voteStartTime = (startTime) => {
 		new ActionRowBuilder()
 			.addComponents(
 				new SelectMenuBuilder()
-					.setCustomId('dayStartTime')
+					.setCustomId('voteDayStartTime')
 					.setPlaceholder(startTime.slice(0, 1))
 					.setOptions(getOptions(0, 6, 1, parseInt(startTime.slice(0, 1)), 'days')),
 			),
 		new ActionRowBuilder().addComponents(
 			new SelectMenuBuilder()
-				.setCustomId('hourStartTime')
+				.setCustomId('voteHourStartTime')
 				.setPlaceholder(startTime.slice(2, 4))
 				.setOptions(getOptions(0, 23, 1, parseInt(startTime.slice(2, 4)), 'Hour')),
 		),
 		new ActionRowBuilder().addComponents(
 			new SelectMenuBuilder()
-				.setCustomId('minuteStartTime')
+				.setCustomId('voteMinuteStartTime')
 				.setPlaceholder(startTime.slice(5, 7))
 				.setOptions(getOptions(0, 55, 5, parseInt(startTime.slice(5, 7)), 'Minute')),
 		)]
@@ -106,7 +105,7 @@ const userHasAccessResponse = (interaction, clanInformation) => {
 	collector.on('collect', async i => {
 		await i.deferUpdate({ ephemeral: true });
 
-		if (i.customId == 'dayStartTime') {
+		if (i.customId == 'voteDayStartTime') {
 			setAutomaticVoteStartTime(i.guildId, 0, i.values[0]).then(d => {
 				const newMenu = voteStartTime(d.settings.autoVotingTimeStart);
 				i.editReply({
@@ -122,7 +121,7 @@ const userHasAccessResponse = (interaction, clanInformation) => {
 				console.log(e);
 			});
 		}
-		if (i.customId == 'hourStartTime') {
+		if (i.customId == 'voteHourStartTime') {
 			setAutomaticVoteStartTime(i.guildId, 1, i.values[0]).then(d => {
 				const newMenu = voteStartTime(d.settings.autoVotingTimeStart);
 				i.editReply({
@@ -138,7 +137,7 @@ const userHasAccessResponse = (interaction, clanInformation) => {
 				console.log(e);
 			});
 		}
-		if (i.customId == 'minuteStartTime') {
+		if (i.customId == 'voteMinuteStartTime') {
 			setAutomaticVoteStartTime(i.guildId, 2, i.values[0]).then(d => {
 				const newMenu = voteStartTime(d.settings.autoVotingTimeStart);
 				i.editReply({

@@ -44,7 +44,6 @@ const autoQuestStart = (questStartEnabled) => {
 		);
 };
 const questStartTime = (startTime) => {
-	console.log(startTime);
 	const getOptions = (start, end, skips, defaultValue, type) => {
 		const day = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 		const options = [];
@@ -64,19 +63,19 @@ const questStartTime = (startTime) => {
 		new ActionRowBuilder()
 			.addComponents(
 				new SelectMenuBuilder()
-					.setCustomId('dayStartTime')
+					.setCustomId('questDayStartTime')
 					.setPlaceholder(startTime.slice(0, 1))
 					.setOptions(getOptions(0, 6, 1, parseInt(startTime.slice(0, 1)), 'days')),
 			),
 		new ActionRowBuilder().addComponents(
 			new SelectMenuBuilder()
-				.setCustomId('hourStartTime')
+				.setCustomId('questHourStartTime')
 				.setPlaceholder(startTime.slice(2, 4))
 				.setOptions(getOptions(0, 23, 1, parseInt(startTime.slice(2, 4)), 'Hour')),
 		),
 		new ActionRowBuilder().addComponents(
 			new SelectMenuBuilder()
-				.setCustomId('minuteStartTime')
+				.setCustomId('questMinuteStartTime')
 				.setPlaceholder(startTime.slice(5, 7))
 				.setOptions(getOptions(0, 55, 5, parseInt(startTime.slice(5, 7)), 'Minute')),
 		)]
@@ -138,7 +137,7 @@ const userHasAccessResponse = (interaction, clanInformation) => {
 	 */
 	collector.on('collect', async i => {
 		await i.deferUpdate({ ephemeral: true });
-		if (i.customId == 'dayStartTime') {
+		if (i.customId == 'questDayStartTime') {
 			setAutomaticQuestStartTime(i.guildId, 0, i.values[0]).then(d => {
 				const newMenu = [autoQuestStart(d.settings.autoQuestStartEnabled)];
 				const newMenu2 = questStartTime(d.settings.autoQuestStartTime);
@@ -155,7 +154,7 @@ const userHasAccessResponse = (interaction, clanInformation) => {
 				console.log(e);
 			});
 		}
-		if (i.customId == 'hourStartTime') {
+		if (i.customId == 'questHourStartTime') {
 			setAutomaticQuestStartTime(i.guildId, 1, i.values[0]).then(d => {
 				const newMenu = [autoQuestStart(d.settings.autoQuestStartEnabled)];
 				const newMenu2 = questStartTime(d.settings.autoQuestStartTime);
@@ -172,7 +171,7 @@ const userHasAccessResponse = (interaction, clanInformation) => {
 				console.log(e);
 			});
 		}
-		if (i.customId == 'minuteStartTime') {
+		if (i.customId == 'questMinuteStartTime') {
 			setAutomaticQuestStartTime(i.guildId, 2, i.values[0]).then(d => {
 				const newMenu = [autoQuestStart(d.settings.autoQuestStartEnabled)];
 				const newMenu2 = questStartTime(d.settings.autoQuestStartTime);

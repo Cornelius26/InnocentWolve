@@ -48,8 +48,7 @@ export const execute = async (interaction) => {
 
 };
 
-const voteStartTime = (endTime) => {
-	console.log(endTime);
+const voteEndTime = (endTime) => {
 	const getOptions = (start, end, skips, defaultValue, type) => {
 		const day = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 		const options = [];
@@ -69,26 +68,26 @@ const voteStartTime = (endTime) => {
 		new ActionRowBuilder()
 			.addComponents(
 				new SelectMenuBuilder()
-					.setCustomId('dayStartTime')
+					.setCustomId('voteDayEndTime')
 					.setPlaceholder(endTime.slice(0, 1))
 					.setOptions(getOptions(0, 6, 1, parseInt(endTime.slice(0, 1)), 'days')),
 			),
 		new ActionRowBuilder().addComponents(
 			new SelectMenuBuilder()
-				.setCustomId('hourStartTime')
+				.setCustomId('voteHourEndTime')
 				.setPlaceholder(endTime.slice(2, 4))
 				.setOptions(getOptions(0, 23, 1, parseInt(endTime.slice(2, 4)), 'Hour')),
 		),
 		new ActionRowBuilder().addComponents(
 			new SelectMenuBuilder()
-				.setCustomId('minuteStartTime')
+				.setCustomId('voteMinuteEndTime')
 				.setPlaceholder(endTime.slice(5, 7))
 				.setOptions(getOptions(0, 55, 5, parseInt(endTime.slice(5, 7)), 'Minute')),
 		)];
 };
 
 const userHasAccessResponse = (interaction, clanInformation) => {
-	const menu = voteStartTime(clanInformation.settings.autoVotingTimeEnd);
+	const menu = voteEndTime(clanInformation.settings.autoVotingTimeEnd);
 	interaction.editReply({
 		content:  'Innocent Wolve Quest End Settings \n' +
 			'The format for the quest end below is\n' +
@@ -103,9 +102,9 @@ const userHasAccessResponse = (interaction, clanInformation) => {
 	collector.on('collect', async i => {
 		await i.deferUpdate({ ephemeral: true });
 
-		if (i.customId == 'dayStartTime') {
+		if (i.customId == 'voteDayEndTime') {
 			setAutomaticVoteEndTime(i.guildId, 0, i.values[0]).then(d => {
-				const newMenu = voteStartTime(d.settings.autoVotingTimeEnd);
+				const newMenu = voteEndTime(d.settings.autoVotingTimeEnd);
 				i.editReply({
 					content: 'Innocent Wolve Quest End Settings | UPDATED: ' + new Date().toLocaleString() + '\n' +
 						'The format for the questStart below is\n' +
@@ -119,9 +118,9 @@ const userHasAccessResponse = (interaction, clanInformation) => {
 				console.log(e);
 			});
 		}
-		if (i.customId == 'hourStartTime') {
+		if (i.customId == 'voteHourEndTime') {
 			setAutomaticVoteEndTime(i.guildId, 1, i.values[0]).then(d => {
-				const newMenu = voteStartTime(d.settings.autoVotingTimeEnd);
+				const newMenu = voteEndTime(d.settings.autoVotingTimeEnd);
 				i.editReply({
 					content: 'Innocent Wolve Quest Start Settings | UPDATED: ' + new Date().toLocaleString() + '\n' +
 						'The format for the questStart below is\n' +
@@ -135,9 +134,9 @@ const userHasAccessResponse = (interaction, clanInformation) => {
 				console.log(e);
 			});
 		}
-		if (i.customId == 'minuteStartTime') {
+		if (i.customId == 'voteMinuteEndTime') {
 			setAutomaticVoteEndTime(i.guildId, 2, i.values[0]).then(d => {
-				const newMenu = voteStartTime(d.settings.autoVotingTimeEnd);
+				const newMenu = voteEndTime(d.settings.autoVotingTimeEnd);
 				i.editReply({
 					content: 'Innocent Wolve Quest Start Settings | UPDATED: ' + new Date().toLocaleString() + '\n' +
 						'The format for the questStart below is\n' +
