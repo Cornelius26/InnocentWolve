@@ -41,7 +41,7 @@ const getInteractions = async (userPath) => {
 	console.log(commandDirectories);
 
 	for (const dir of commandDirectories) {
-		getInteractions(userPath + '/' + dir);
+		await getInteractions(userPath + '/' + dir);
 	}
 };
 
