@@ -7,6 +7,7 @@ import { checkAccessRight } from '../../accessManager.js';
 import { getUserById } from '../../wolvesVille/WolvesVilleRequests.js';
 
 if (process.env.ENVIROMENT == 'production') {
+	console.log("load")
 	GlobalFonts.registerFromPath('~/NotoColorEmoji-Regular.ttf', 'Google Emoji');
 }
 
