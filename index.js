@@ -2,7 +2,7 @@ import * as dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
 
-import { Client, Events, GatewayIntentBits, Collection } from 'discord.js';
+import { Client, Events, GatewayIntentBits, Collection, Routes, REST } from 'discord.js';
 import { fileURLToPath } from 'url';
 
 import schedule from 'node-schedule';
@@ -17,6 +17,10 @@ const token = process.env.DISCORD_TOKEN;
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.commands = new Collection();
+
+// Construct and prepare an instance of the REST module
+const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
+
 
 const getInteractions = (userPath) => {
 	console.log(userPath);
@@ -35,6 +39,13 @@ const getInteractions = (userPath) => {
 		// Set a new item in the Collection with the key as the command name and the value as the exported module
 	}
 	console.log(commandDirectories);
+	if (process.env.ENVIROMENT == 'production') {
+		rest.put(
+			Routes.applicationCommands(process.env.CLIENT_ID),
+			{ body: client.commands },
+		);
+		console.log('Commands Deployed');
+	}
 	for (const dir of commandDirectories) {
 		getInteractions(userPath + '/' + dir);
 	}
@@ -45,10 +56,10 @@ getInteractions('commands');
 * client is your discord.js Client
 * commands obj is your command data you want to add to the guild
 */
-client.on('guildCreate', async (guild) => {
-	guild.commands.set(client.commands).then(() =>
-		console.log(`Commands deployed in guild ${guild.name}!`));
-});
+//client.on('guildCreate', async (guild) => {
+//	console.log(guild);
+//	deployCommands(guild.id);
+//});
 
 
 client.on(Events.InteractionCreate, async interaction => {
@@ -61,8 +72,7 @@ client.on(Events.InteractionCreate, async interaction => {
 
 	try {
 		await command.execute(interaction);
-	}
-	catch (error) {
+	} catch (error) {
 		console.error(error);
 		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
 	}
