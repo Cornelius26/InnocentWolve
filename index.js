@@ -23,7 +23,6 @@ const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
 
 let commandCollection = [];
 const getInteractions = async (userPath) => {
-	console.log(userPath);
 	const commandsPath = path.join(__dirname, userPath);
 	const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
 	const commandDirectories = fs.readdirSync(commandsPath, { withFileTypes: true })
@@ -35,6 +34,13 @@ const getInteractions = async (userPath) => {
 		import('file://' + filePath).then((command) => {
 			console.log(command.data.name);
 			client.commands.set(command.data.name, command);
+			if (process.env.ENVIROMENT == 'production') {
+				rest.put(
+					Routes.applicationCommands(process.env.CLIENT_ID),
+					{ body: client.commands },
+				);
+				console.log('Commands Deployed');
+			}
 		});
 		// Set a new item in the Collection with the key as the command name and the value as the exported module
 	}
@@ -45,15 +51,7 @@ const getInteractions = async (userPath) => {
 	}
 };
 
-getInteractions('commands').then(() => {
-	if (process.env.ENVIROMENT == 'production') {
-		rest.put(
-			Routes.applicationCommands(process.env.CLIENT_ID),
-			{ body: client.commands },
-		);
-		console.log('Commands Deployed');
-	}
-});
+getInteractions('commands');
 
 /*
 * client is your discord.js Client
