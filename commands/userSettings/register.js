@@ -88,7 +88,7 @@ const checkUserRegisterState = async (interaction, username) => {
 				}
 				else if (clandata.guildId != interaction.guildId) {
 
-					console.log("hi")
+					console.log('hi');
 					if (wolvesVilleClanData.body.leaderId == wolvesVilleUserdata.body.id) {
 						return setClanDiscordId(wolvesVilleUserdata.body.clanId, interaction.guildId).then(d => {
 							return ['leaderRegisteredClan', clandata._id, wolvesVilleUserdata.body.id];
@@ -116,10 +116,16 @@ const response = (interaction, isCreateMember, text, clanId, userId) => {
 		createMember(userId, clanId, interaction.user.id).then(authCode => {
 			interaction.editReply({ ephemeral: true, content: text.replace('authCode', authCode) });
 		}).catch(err => {
-			console.log(err);
+			let answer = 'A internal error occured. Please contact a developer';
+			if (err == 'discordId already taken') {
+				answer = 'You can not register with the same discord account for different Wolvesville Accounts';
+			}
+			else if (err == 'already registered') {
+				answer = 'You are already registered';
+			}
 			interaction.editReply({
 				ephemeral: true,
-				content: 'You may have already a registered account to this discord account. Try to delete your account with !delete (NOT IMPLEMENTED)',
+				content: answer,
 			});
 		});
 	}

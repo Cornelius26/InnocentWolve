@@ -46,7 +46,7 @@ export const getMemberByDiscordId = async (id) => {
 };
 export const createMember = async (userID, localClanId, discordId) => {
 	return ClanMembers.findOne({ wolvesvilleId: userID }).exec().then(d => {
-		return ClanMembers.findOne({ discordId: discordId }).exec.then(check => {
+		return ClanMembers.findOne({ discordId: discordId }).exec().then(check => {
 			if (check != null) {
 				throw new Error('discordId already taken');
 			}
