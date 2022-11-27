@@ -69,7 +69,6 @@ export const execute = async (interaction) => {
 const profileImage = async (clanMember, wolvesvilleMemberData) => {
 
 	const url = wolvesvilleMemberData.equippedAvatar.url.slice(0, -4) + '@3x' + wolvesvilleMemberData.equippedAvatar.url.slice(-4);
-	console.log(url);
 	return loadImage(url).then(image => {
 		return loadImage('https://cdn.wolvesville.com/backgrounds/wolvesville_large_day.wide@2x.png').then(backgroundimage => {
 			const neededHeight = image.height;
@@ -90,7 +89,6 @@ const profileImage = async (clanMember, wolvesvilleMemberData) => {
 			context.strokeStyle = '#000000';
 
 			context.font = process.env.ENVIROMENT == 'production' ? '70px DejaVu Sans' : '70px sans-serif';
-			console.log(context.font)
 			context.fillStyle = '#ffffff';
 			context.fillText(wolvesvilleMemberData.username, image.width + 20, 80);
 

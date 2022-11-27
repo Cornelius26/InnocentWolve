@@ -4,7 +4,6 @@ import { getClanMembers, getWolvesvilleClan } from './wolvesVille/WolvesVilleReq
 
 export const checkAccessRight = async (interaction) => {
 	return getMemberByDiscordId(interaction.user.id).then(userData => {
-		console.log(userData)
 		if (userData === null) return ['noAccess', null, userData];
 		return getClanMembers(userData.clanId.clanId).then(clanMembers => {
 			//console.log(clanMembers)
