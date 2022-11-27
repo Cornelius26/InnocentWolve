@@ -23,7 +23,6 @@ export const execute = async (interaction) => {
 	try {
 		checkAccessRight(interaction).then(rights => {
 			const access = rights[0];
-			console.log(access);
 			const userData = rights[2];
 			if (access != 'clanNotRegistered' && access != 'noAccess') {
 				getLastVoting(userData.clanId._id).then(voting => {
@@ -142,7 +141,6 @@ const votingOverviewImage = async (clanVotings, userId) => {
 	}
 
 	const images = [];
-	console.log(urls);
 	for (const url of urls) {
 		images.push(await loadImage(url.slice(0, -4) + url.slice(-4)));// '@2x' + url.slice(-4)));
 
@@ -158,8 +156,6 @@ const votingOverviewImage = async (clanVotings, userId) => {
 		}
 
 	}
-	console.log(neededHeight);
-	console.log(maxWidthImages);
 
 	const canvas = createCanvas(maxWidthImages * 2, neededHeight);
 
@@ -175,20 +171,21 @@ const votingOverviewImage = async (clanVotings, userId) => {
 		context.drawImage(images[image], 0, images[image].height * image, images[image].width, images[image].height);
 		context.strokeStyle = '#000000';
 		context.strokeRect(0, images[image].height * image, images[image].width, images[image].width);
-		context.font = '30px sans-serif';
-		if (process.env.ENVIROMENT == 'production') {
-			context.font = '30px Google Emoji';
-		}
+
+		context.font = process.env.ENVIROMENT == 'production' ? '30 DejaVu Sans' : '30px sans-serif';
 		context.fillStyle = '#ffffff';
 		context.fillText(names[image], images[image].width + 20, images[image].height * image + images[image].height / 2 - 80);
-		context.font = '20px sans-serif';
-		if (process.env.ENVIROMENT == 'production') {
-			context.font = '30px Google Emoji';
-		}
-		context.fillText((gemQuest[image] ? '💎 Gem Quest' : '💰 Gold Quest'), images[image].width + 20, images[image].height * image + images[image].height / 2 - 50);
-		context.fillText('Number of Votes for this Quest: ' + numberOfVotes[image], images[image].width + 20, images[image].height * image + images[image].height / 2 - 10);
-		context.fillText('You Voted: ' + (userVote[image] ? '✔' : '❌'), images[image].width + 20, images[image].height * image + images[image].height / 2 + 40);
-		context.fillText('You Like to Participate: ' + (userParticipate[image] ? '✔' : '❌'), images[image].width + 20, images[image].height * image + images[image].height / 2 + 70);
+
+		context.font = process.env.ENVIROMENT == 'production' ? '20px DejaVu Sans' : '20px sans-serif';
+		context.fillText(gemQuest[image] ? 'Gem Quest' : 'Gold Quest', images[image].width + 45, images[image].height * image + images[image].height / 2 - 50);
+		context.fillText(numberOfVotes[image] + ' - Number of Votes for this Quest', images[image].width + 30, images[image].height * image + images[image].height / 2 - 10);
+		context.fillText('- You Voted', images[image].width + 35, images[image].height * image + images[image].height / 2 + 40);
+		context.fillText('- You Like to Participate', images[image].width + 35, images[image].height * image + images[image].height / 2 + 70);
+
+		context.font = process.env.ENVIROMENT == 'production' ? '20px Noto Color Emoji' : '20px sans-serif';
+		context.fillText((gemQuest[image] ? '💎' : '💰'), images[image].width + 20, images[image].height * image + images[image].height / 2 - 50);
+		context.fillText(userVote[image] ? '✔' : '❌', images[image].width + 20, images[image].height * image + images[image].height / 2 + 40);
+		context.fillText(userParticipate[image] ? '✔' : '❌', images[image].width + 20, images[image].height * image + images[image].height / 2 + 70);
 
 	}
 
@@ -226,7 +223,6 @@ const response = async (interaction, clanVotings, userData) => {
 				if ((questOption.purchasableWithGems == true && userData.gemsBalance >= userData.clanId.settings.defaultQuestPriceGem) ||
 					(questOption.purchasableWithGems == false && userData.goldBalance >= userData.clanId.settings.defaultQuestPriceGold)) {
 					if (i.customId.split(':')[1] == 'voting') {
-						console.log('voting');
 						const voteOption = getVoted(userId, (i.customId.split(':')[2] == 'true'), null);
 
 						addUpdateVoting(clanVotings._id, userId, questOption.id, voteOption).then(async d => {
@@ -244,7 +240,6 @@ const response = async (interaction, clanVotings, userData) => {
 						break;
 					}
 					else if (i.customId.split(':')[1] == 'participation') {
-						console.log('participation');
 						const voteOption = getVoted(userId, null, (i.customId.split(':')[2] == 'true'));
 
 						addUpdateVoting(clanVotings._id, userId, questOption.id, voteOption).then(async d => {
@@ -262,7 +257,6 @@ const response = async (interaction, clanVotings, userData) => {
 					}
 				}
 				else {
-					console.log('HIERE');
 					interaction.editReply({
 						content: 'Here you can vote for the current quest. With 🗳 you vote for the quest. With 👍 you like to participate in the Quest.\n' +
 							'You do not have enough balance to join this quest.',

@@ -7,7 +7,6 @@ import { checkAccessRight } from '../../accessManager.js';
 import { getUserById } from '../../wolvesVille/WolvesVilleRequests.js';
 
 
-
 /**
  * Create Command to Show Profile
  * Options:
@@ -89,26 +88,25 @@ const profileImage = async (clanMember, wolvesvilleMemberData) => {
 			// context.fillRect(1, 1, image.width, image.height);
 			context.drawImage(image, 0, 0, image.width, image.height);
 			context.strokeStyle = '#000000';
-			context.font = '70px sans-serif';
-			if (process.env.ENVIROMENT == 'production') {
-				context.font = '70px Noto Color Emoji';
-			}
+
+			context.font = process.env.ENVIROMENT == 'production' ? '70px DejaVu Sans' : '70px sans-serif';
+			console.log(context.font)
 			context.fillStyle = '#ffffff';
 			context.fillText(wolvesvilleMemberData.username, image.width + 20, 80);
-			context.font = '50px sans-serif';
-			if (process.env.ENVIROMENT == 'production') {
-				context.font = '50px Noto Color Emoji';
-			}
+
+			context.font = process.env.ENVIROMENT == 'production' ? '50px Noto Color Emoji' : '50px sans-serif';
 			context.fillText('💰', image.width + 20, 150);
 			context.fillText('💎', image.width + 20, 210);
+
+			context.font = process.env.ENVIROMENT == 'production' ? '50px DejaVu Sans' : '50px sans-serif';
 			context.fillText('Current Gold Balance ' + clanMember.goldBalance.toString(), image.width + 100, 150);
 			context.fillText('Current Gem Balance ' + clanMember.gemsBalance.toString(), image.width + 100, 210);
-			context.font = '40px sans-serif';
-			if (process.env.ENVIROMENT == 'production') {
-				context.font = '40px Noto Color Emoji';
-			}
+
+			context.font = process.env.ENVIROMENT == 'production' ? '40px Noto Color Emoji' : '40px sans-serif';
 			context.fillText('💰', image.width + 20 + 15, 270);
 			context.fillText('💎', image.width + 20 + 15, 320);
+
+			context.font = process.env.ENVIROMENT == 'production' ? '40px DejaVu Sans' : '40px sans-serif';
 			context.fillText('Total Gold Donated ' + clanMember.goldDonated.toString(), image.width + 100, 270);
 			context.fillText('Total Gems Donated ' + clanMember.gemsDonated.toString(), image.width + 100, 320);
 
