@@ -115,6 +115,7 @@ export const activateMember = (_id) => {
 export const addDonateGoldAndGemToUser = async (_clanId, wolvesVilleId, gold, gems) => {
 	return ClanMembers.findOne({ clanId: _clanId, wolvesvilleId: wolvesVilleId }).exec().then(member => {
 		console.log(member);
+		if (member == null) {return null;}
 		member.goldDonated += gold;
 		member.goldBalance += gold;
 		member.gemsDonated += gems;

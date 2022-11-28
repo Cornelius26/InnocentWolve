@@ -73,14 +73,14 @@ const questVotingsSchema = new Schema({
 			questParticipants: [
 				{
 					type: Schema.Types.ObjectId,
-					ref: 'clanMember',
+					ref: 'clanMembers',
 					required: true,
 				}],
 			votings: [
 				{
 					clanMemberId: {
 						type: Schema.Types.ObjectId,
-						ref: 'clanMember',
+						ref: 'clanMembers',
 						required: true,
 					}, votedFor: {
 						type: Boolean,
@@ -119,12 +119,12 @@ const transactionsSchema = new Schema({
 	date: { type: Date, required: true },
 	sender: {
 		type: Schema.Types.ObjectId,
-		ref: 'clanMember',
+		ref: 'clanMembers',
 		required: true,
 	},
 	receiver: {
 		type: Schema.Types.ObjectId,
-		ref: 'clanMember',
+		ref: 'clanMembers',
 		required: true,
 	},
 

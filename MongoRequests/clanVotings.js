@@ -2,12 +2,22 @@ import { questVotings as QuestVotings } from '../mongoModel.js';
 import { getQuestes } from '../wolvesVille/WolvesVilleRequests.js';
 
 export const getLastVoting = async (clanId) => {
-	return QuestVotings.findOne({ votingForClan: clanId }).sort({ votingStarted: -1 }).exec().then(d => {
+	return QuestVotings.findOne({ votingForClan: clanId }).sort({ votingStarted: -1 }).populate('questOptions.votings.clanMemberId').exec().then(d => {
 		return d;
 	}).catch(e => {
 		throw new Error(e);
 	},
 	);
+};
+export const getLastVotingWeek = async (clanId, week) => {
+	return QuestVotings.findOne({
+		votingForClan: clanId,
+		calenderWeek: week,
+	}).sort({ votingStarted: -1 }).populate('questOptions.votings.clanMemberId').exec().then(d => {
+		return d;
+	}).catch(e => {
+		throw new Error(e);
+	});
 };
 Date.prototype.getWeekNumber = () => {
 	const d = new Date(Date.UTC(this.getFullYear(), this.getMonth(), this.getDate()));
