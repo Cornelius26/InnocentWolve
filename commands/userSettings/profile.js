@@ -121,8 +121,8 @@ const profileImage = async (clanMember, wolvesvilleMemberData) => {
 			const balanceEmojiWidth2 = getTextWidth('💎 ', context.font);
 
 			context.font = process.env.ENVIROMENT == 'production' ? '50px DejaVu Sans' : '50px sans-serif';
-			context.fillText('Current Gold Balance ' + clanMember.goldBalance.toString(), image.width + leftMarginSize + balanceEmojiWidth1, balancePosition1);
-			context.fillText('Current Gem Balance ' + clanMember.gemsBalance.toString(), image.width + leftMarginSize + balanceEmojiWidth2, balancePosition2);
+			context.fillText('Current Gold Balance ' + clanMember.goldBalance.toString(), image.width + balanceEmojiWidth1, balancePosition1);
+			context.fillText('Current Gem Balance ' + clanMember.gemsBalance.toString(), image.width + balanceEmojiWidth2, balancePosition2);
 
 			context.font = process.env.ENVIROMENT == 'production' ? '40px Noto Color Emoji' : '40px sans-serif';
 			context.fillText('💰', image.width + leftMarginSize, donatedPosition1);
@@ -130,8 +130,8 @@ const profileImage = async (clanMember, wolvesvilleMemberData) => {
 			const donatedEmojiWidth1 = getTextWidth('💰 ', context.font);
 			const donatedEmojiWidth2 = getTextWidth('💎 ', context.font);
 			context.font = process.env.ENVIROMENT == 'production' ? '40px DejaVu Sans' : '40px sans-serif';
-			context.fillText('Total Gold Donated ' + clanMember.goldDonated.toString(), image.width + leftMarginSize + donatedEmojiWidth1, donatedPosition1);
-			context.fillText('Total Gems Donated ' + clanMember.gemsDonated.toString(), image.width + leftMarginSize + donatedEmojiWidth2, donatedPosition2);
+			context.fillText('Total Gold Donated ' + clanMember.goldDonated.toString(), image.width + donatedEmojiWidth1, donatedPosition1);
+			context.fillText('Total Gems Donated ' + clanMember.gemsDonated.toString(), image.width + donatedEmojiWidth2, donatedPosition2);
 
 
 			return new AttachmentBuilder(canvas.toBuffer('image/png'), { name: 'profile-image.png' });
