@@ -69,7 +69,8 @@ export const createMember = async (userID, localClanId, discordId) => {
 			try {
 				newMember.save();
 				return authCode;
-			} catch (err) {
+			}
+			catch (err) {
 				throw new Error(err);
 			}
 		});
@@ -113,6 +114,7 @@ export const activateMember = (_id) => {
 
 export const addDonateGoldAndGemToUser = async (_clanId, wolvesVilleId, gold, gems) => {
 	return ClanMembers.findOne({ clanId: _clanId, wolvesvilleId: wolvesVilleId }).exec().then(member => {
+		console.log(member);
 		member.goldDonated += gold;
 		member.goldBalance += gold;
 		member.gemsDonated += gems;
@@ -124,9 +126,7 @@ export const addDonateGoldAndGemToUser = async (_clanId, wolvesVilleId, gold, ge
 };
 export const removeGoldAndGemFromUser = async (_clanId, wolvesVilleId, gold, gems) => {
 	return ClanMembers.findOne({ clanId: _clanId, wolvesvilleId: wolvesVilleId }).exec().then(member => {
-		member.goldDonated -= gold;
 		member.goldBalance -= gold;
-		member.gemsDonated -= gems;
 		member.gemsBalance -= gems;
 		return member.save();
 	}).catch(e => {
