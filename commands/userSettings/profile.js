@@ -127,8 +127,8 @@ const profileImage = async (clanMember, wolvesvilleMemberData) => {
 			context.font = process.env.ENVIROMENT == 'production' ? '40px Noto Color Emoji' : '40px sans-serif';
 			context.fillText('💰', image.width + leftMarginSize, donatedPosition1);
 			context.fillText('💎', image.width + leftMarginSize, donatedPosition2);
-			const donatedEmojiWidth1 = getTextWidth('💰 ', context.font);
-			const donatedEmojiWidth2 = getTextWidth('💎 ', context.font);
+			const donatedEmojiWidth1 = getTextWidth('💰  ', context.font);
+			const donatedEmojiWidth2 = getTextWidth('💎  ', context.font);
 			context.font = process.env.ENVIROMENT == 'production' ? '40px DejaVu Sans' : '40px sans-serif';
 			context.fillText('Total Gold Donated ' + clanMember.goldDonated.toString(), image.width + donatedEmojiWidth1, donatedPosition1);
 			context.fillText('Total Gems Donated ' + clanMember.gemsDonated.toString(), image.width + donatedEmojiWidth2, donatedPosition2);
