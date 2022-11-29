@@ -165,7 +165,7 @@ const checkVotingEnds = async (allClans) => {
 			const clanHour = parseInt(clan.settings.autoVotingTimeEnd.slice(2, 4));
 			const clanMinute = parseInt(clan.settings.autoVotingTimeEnd.slice(5, 7)) - 10;
 			getLastVoting(clan._id).then(d => {
-				if (d!=null && d.votingActive == true) {
+				if (d != null && d.votingActive == true) {
 					if (d == null || d.calenderWeek <= new Date().getWeekNumber()) {
 
 						if (clanDay < day ||

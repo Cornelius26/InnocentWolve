@@ -39,7 +39,8 @@ export const execute = async (interaction) => {
 				interaction.editReply({ content: 'You have no access to this command.', ephemeral: true });
 			}
 		});
-	} catch (e) {
+	}
+	catch (e) {
 		console.log(e);
 		interaction.editReply({
 			content: 'You have no access to the bot or a internal error accured.',
@@ -229,7 +230,7 @@ const response = async (interaction, clanVotings, userData) => {
 
 							const newAttachment = await votingOverviewImage(d, userId);
 							const newVotingButtons = answerButtons(d, userId);
-							interaction.editReply({
+							i.editReply({
 								content: 'Here you can vote for the current quest. With 🗳 you vote for the quest. With 👍 you like to participate in the Quest.',
 								files: [newAttachment],
 								components: newVotingButtons,
@@ -246,7 +247,7 @@ const response = async (interaction, clanVotings, userData) => {
 
 							const newAttachment = await votingOverviewImage(d, userId);
 							const newVotingButtons = answerButtons(d, userId);
-							interaction.editReply({
+							i.editReply({
 								content: 'Here you can vote for the current quest. With 🗳 you vote for the quest. With 👍 you like to participate in the Quest.',
 								files: [newAttachment],
 								components: newVotingButtons,
@@ -257,14 +258,13 @@ const response = async (interaction, clanVotings, userData) => {
 					}
 				}
 				else {
-					interaction.editReply({
+					i.editReply({
 						content: 'Here you can vote for the current quest. With 🗳 you vote for the quest. With 👍 you like to participate in the Quest.\n' +
 							'You do not have enough balance to join this quest.',
 						files: [], components: [], ephemeral: true,
 					});
 				}
 			}
-
 		}
 	});
 
