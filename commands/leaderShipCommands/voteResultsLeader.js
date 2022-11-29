@@ -32,7 +32,7 @@ export const execute = async (interaction) => {
 			const access = rights[0];
 			const coLeaderAcess = rights[1];
 			const userData = rights[2];
-			if (access == 'leader' || (access == 'coLeader' && coLeaderAcess)) {
+			if (access == 'leader' || access == 'coLeader' ) {
 				userHasAccessResponse(interaction, userData.clanId);
 			}
 			else if (access == 'clanNotRegistered') {
