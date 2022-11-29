@@ -185,8 +185,8 @@ const votingOverviewImage = async (clanVotings, userId) => {
 		context.font = process.env.ENVIROMENT == 'production' ? '20px DejaVu Sans' : '20px sans-serif';
 		context.fillText(gemQuest[image] ? 'Gem Quest' : 'Gold Quest', images[image].width + 45, images[image].height * image + images[image].height / 2 - 50);
 		context.fillText(numberOfVotes[image] + ' - Number of Votes for this Quest', images[image].width + 30, images[image].height * image + images[image].height / 2 - 10);
-		context.fillText('- You Voted', images[image].width + 35, images[image].height * image + images[image].height / 2 + 40);
-		context.fillText('- You Like to Participate', images[image].width + 35, images[image].height * image + images[image].height / 2 + 70);
+		context.fillText('  - You Voted', images[image].width + 35, images[image].height * image + images[image].height / 2 + 40);
+		context.fillText('  - You Like to Participate', images[image].width + 35, images[image].height * image + images[image].height / 2 + 70);
 
 		context.font = process.env.ENVIROMENT == 'production' ? '20px Noto Color Emoji' : '20px sans-serif';
 		context.fillText((gemQuest[image] ? '💎' : '💰'), images[image].width + 20, images[image].height * image + images[image].height / 2 - 50);
