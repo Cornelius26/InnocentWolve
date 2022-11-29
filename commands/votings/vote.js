@@ -130,7 +130,7 @@ const votingOverviewImage = async (clanVotings, userId) => {
 			if (vote.votedFor == true) {
 				voteCount++;
 			}
-			if (vote.clanMemberId.toString() == userId.toString()) {
+			if (vote.clanMemberId._id.toString() == userId.toString()) {
 				if (vote.votedFor == true) {
 					localUserVote = true;
 				}
@@ -173,6 +173,7 @@ const votingOverviewImage = async (clanVotings, userId) => {
 	// context.arc(125, 125, 100, 0, Math.PI * 2, true);
 	// context.closePath();
 	// context.clip();
+	let c=0
 	for (const image in images) {
 		context.drawImage(images[image], 0, images[image].height * image, images[image].width, images[image].height);
 		context.strokeStyle = '#000000';
