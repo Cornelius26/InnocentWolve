@@ -96,7 +96,7 @@ const answerButtons = (clanVotings, userId) => {
 		for (const vote in clanVotings.questOptions) {
 			arrayOfButtons.push(new ButtonBuilder()
 				.setCustomId(questIds[vote] + ':' + mode + ':' + (mode == 'voting' ? (userVote[vote] ? 'false' : 'true') : (userParticipate[vote] ? 'false' : 'true')))
-				.setLabel((mode == 'voting' ? '🗳' : '👍') + names[vote])
+				.setLabel((mode == 'voting' ? '🗳  ' : '👍') + names[vote])
 				.setStyle(((mode == 'voting' ? userVote[vote] : userParticipate[vote]) ? ButtonStyle.Success : ButtonStyle.Danger)),
 			);
 		}
