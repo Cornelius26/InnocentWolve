@@ -73,7 +73,7 @@ const profileImage = async (clanMember, wolvesvilleMemberData) => {
 	return loadImage(url).then(image => {
 		return loadImage('https://cdn.wolvesville.com/backgrounds/wolvesville_large_day.wide@2x.png').then(backgroundimage => {
 			const neededHeight = image.height;
-			const maxWidthImages = backgroundimage + image.width;
+			const maxWidthImages = backgroundimage.width + image.width;
 
 
 			const canvas = createCanvas(maxWidthImages, neededHeight);
