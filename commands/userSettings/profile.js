@@ -73,11 +73,10 @@ const profileImage = async (clanMember, wolvesvilleMemberData) => {
 	return loadImage(url).then(image => {
 		return loadImage('https://cdn.wolvesville.com/backgrounds/wolvesville_large_day.wide@2x.png').then(backgroundimage => {
 			const neededHeight = image.height;
-			const maxWidthImages = image.width;
+			const maxWidthImages = backgroundimage + image.width;
 
 
-			const canvas = createCanvas(maxWidthImages * 3, neededHeight);
-
+			const canvas = createCanvas(maxWidthImages, neededHeight);
 			const getTextWidth = (text, font) => {
 				// if given, use cached canvas for better performance
 				// else, create new canvas
@@ -86,6 +85,7 @@ const profileImage = async (clanMember, wolvesvilleMemberData) => {
 				const metrics = localContext.measureText(text);
 				return metrics.width;
 			};
+
 
 			const context = canvas.getContext('2d');
 			context.fillStyle = '#e2e2e2';
