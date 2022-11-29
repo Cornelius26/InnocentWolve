@@ -72,7 +72,7 @@ export const addUpdateVoting = async (voteId, userId, option, voting) => {
 						}
 						break;
 					}
-
+				}
 				if (!found) {
 					if (voting.votedFor == null) {
 						voting.votedFor = false;
