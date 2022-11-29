@@ -32,7 +32,7 @@ export const execute = async (interaction) => {
 			const access = rights[0];
 			const coLeaderAcess = rights[1];
 			const userData = rights[2];
-			if (access == 'leader' || access == 'coLeader' ) {
+			if (access == 'leader' || access == 'coLeader') {
 				userHasAccessResponse(interaction, userData.clanId);
 			}
 			else if (access == 'clanNotRegistered') {
@@ -69,29 +69,13 @@ const buildVotingResult = async (voting) => {
 	const subtitleHeight = 16;
 	const textHeight = 14;
 
-	let neededHeight = 0;
 
-	//header Row
-	neededHeight += margins + titleHeight + margins;
-
-	neededHeight += +titleHeight + smallMargins; // for winner
 	let c = 0;
 	for (const option of voting.questOptions) {
 		const urlSplitted = option.promoImageUrl.split('/');
 		names.push(urlSplitted[urlSplitted.length - 1].slice(0, -4).toUpperCase());
 		images.push(await loadImage(option.promoImageUrl.slice(0, -4) + option.promoImageUrl.slice(-4)));// '@2x' + url.slice(-4)));
-
-		neededHeight += images[c].height;
 		c++;
-		neededHeight += smallMargins + titleHeight + smallMargins; // Questname
-
-		neededHeight += subtitleHeight + smallMargins; // Questtype
-		neededHeight += subtitleHeight + smallMargins; // Number of votes
-		neededHeight += subtitleHeight + smallMargins; // Number of participates
-
-		neededHeight += subtitleHeight + smallMargins; // Voters
-		neededHeight += subtitleHeight + smallMargins; // Participaters
-
 
 		let votes = 0;
 		let participates = 0;
@@ -105,10 +89,6 @@ const buildVotingResult = async (voting) => {
 		}
 		numberOfVotes.push(votes);
 		numberOfParticipates.push(participates);
-		neededHeight += textHeight * votes + smallMargins * votes;
-		neededHeight += textHeight * participates + smallMargins * votes;
-		neededHeight +=margins
-
 	}
 	for (const option of voting.questOptions) {
 		let voteCount = 0;
@@ -119,8 +99,40 @@ const buildVotingResult = async (voting) => {
 		}
 		numberOfVotes.push(voteCount);
 	}
+
 	const max = Math.max.apply(null, numberOfVotes);
 	const itemWonIndex = numberOfVotes.indexOf(max);
+
+
+	let neededHeight = 0;
+	neededHeight += margins + titleHeight;
+	neededHeight += margins;
+	let localC = 0;
+	for (const option of voting.questOptions) {
+		neededHeight += images[localC].height + smallMargins + titleHeight;
+		if (localC == itemWonIndex) {
+			neededHeight += smallMargins + subtitleHeight;
+		}
+		neededHeight += smallMargins + titleHeight;
+		neededHeight += smallMargins + subtitleHeight;
+		neededHeight += smallMargins + subtitleHeight;
+		neededHeight += smallMargins + subtitleHeight;
+		for (const vote of option.votings) {
+			if (vote.votedFor == true) {
+				neededHeight += smallMargins + textHeight;
+			}
+		}
+		neededHeight += smallMargins + subtitleHeight;
+		for (const vote of option.votings) {
+			if (vote.participation == true) {
+				neededHeight += smallMargins + textHeight;
+			}
+		}
+		neededHeight += margins;
+		localC += 1;
+
+	}
+
 
 	const canvas = createCanvas(images[0].width, neededHeight);
 	const context = canvas.getContext('2d');

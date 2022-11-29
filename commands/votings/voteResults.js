@@ -62,29 +62,17 @@ const buildVotingResult = async (voting) => {
 	const smallMargins = 10;
 	const titleHeight = 20;
 	const subtitleHeight = 16;
-	const textHeight = 14;
 
-	let neededHeight = 0;
 
-	// header Row
-	neededHeight += margins + titleHeight + margins;
+	const max = Math.max.apply(null, numberOfVotes);
+	const itemWonIndex = numberOfVotes.indexOf(max);
 
-	neededHeight += +titleHeight + smallMargins; // for winner
+
 	let c = 0;
 	for (const option of voting.questOptions) {
 		const urlSplitted = option.promoImageUrl.split('/');
 		names.push(urlSplitted[urlSplitted.length - 1].slice(0, -4).toUpperCase());
 		images.push(await loadImage(option.promoImageUrl.slice(0, -4) + option.promoImageUrl.slice(-4)));// '@2x' + url.slice(-4)));
-
-		neededHeight += images[c].height;
-		c++;
-		neededHeight += smallMargins + titleHeight + smallMargins; // Questname
-
-		neededHeight += subtitleHeight + smallMargins; // Questtype
-		neededHeight += subtitleHeight + smallMargins; // Number of votes
-		neededHeight += subtitleHeight + smallMargins; // Number of participates
-
-
 		let votes = 0;
 		let participates = 0;
 		for (const voter of option.votings) {
@@ -95,7 +83,6 @@ const buildVotingResult = async (voting) => {
 				participates++;
 			}
 		}
-		neededHeight += smallMargins
 		numberOfVotes.push(votes);
 		numberOfParticipates.push(participates);
 
@@ -109,8 +96,24 @@ const buildVotingResult = async (voting) => {
 		}
 		numberOfVotes.push(voteCount);
 	}
-	const max = Math.max.apply(null, numberOfVotes);
-	const itemWonIndex = numberOfVotes.indexOf(max);
+	let neededHeight = 0;
+	neededHeight += margins + titleHeight;
+	neededHeight += margins;
+	let localCounter = 0;
+	// eslint-disable-next-line no-unused-vars
+	for (const option of voting.questOptions) {
+		neededHeight += images[localCounter].height + smallMargins + titleHeight;
+		if (localCounter == itemWonIndex) {
+			neededHeight += smallMargins + subtitleHeight;
+		}
+
+		neededHeight += smallMargins + titleHeight;
+
+		neededHeight += smallMargins + subtitleHeight;
+		neededHeight += smallMargins + subtitleHeight;
+		neededHeight += margins;
+		localCounter += 1;
+	}
 
 	const canvas = createCanvas(images[0].width, neededHeight);
 	const context = canvas.getContext('2d');
@@ -123,7 +126,6 @@ const buildVotingResult = async (voting) => {
 	context.fillText('QuestVoting of Week ' + voting.calenderWeek, leftMargin, textPosition);
 	textPosition += margins;
 	let counter = 0;
-	const nameMap = new Map();
 	for (const option of voting.questOptions) {
 		context.drawImage(images[counter], 0, textPosition, images[counter].width, images[counter].height);
 		textPosition += images[counter].height + smallMargins + titleHeight;
