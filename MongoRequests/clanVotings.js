@@ -49,30 +49,28 @@ export const createVoting = async (wolvesVilleClanId, clanId) => {
 	});
 };
 export const addUpdateVoting = async (voteId, userId, option, voting) => {
+	console.log(voting);
 	return QuestVotings.findById(voteId).exec().then(foundVoting => {
 		for (const questOption of foundVoting.questOptions) {
+			console.log('Found');
 			if (questOption.id == option) {
 				let found = false;
 				for (const givenVoting of questOption.votings) {
 					if (givenVoting.clanMemberId.toString() == userId.toString()) {
+						console.log('userFound');
 						found = true;
 						if (voting.participation == null) {
-							voting.participation = givenVoting.participation;
+							givenVoting.votedFor = voting.votedFor;
+							if (givenVoting.votedFor == true) {givenVoting.participation = true;}
 						}
 						if (voting.votedFor == null) {
-							voting.votedFor = givenVoting.votedFor;
-						}
-						givenVoting.votedFor = voting.votedFor;
-						givenVoting.participation = voting.participation;
-						if (givenVoting.participation == false) {
-							givenVoting.votedFor = false;
-						}
-						if (givenVoting.votedFor == true) {
-							givenVoting.participation = true;
+							givenVoting.participation = voting.participation;
+							if (givenVoting.participation == false) {givenVoting.votedFor = false;}
 						}
 						break;
 					}
 				}
+				console.log('b');
 				if (!found) {
 					if (voting.votedFor == null) {
 						voting.votedFor = false;
@@ -83,6 +81,7 @@ export const addUpdateVoting = async (voteId, userId, option, voting) => {
 					if (voting.votedFor == true) {
 						voting.participation = true;
 					}
+
 					questOption.votings.push(voting);
 				}
 				break;

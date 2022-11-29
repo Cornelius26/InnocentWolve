@@ -39,8 +39,7 @@ export const execute = async (interaction) => {
 				interaction.editReply({ content: 'You have no access to this command.', ephemeral: true });
 			}
 		});
-	}
-	catch (e) {
+	} catch (e) {
 		console.log(e);
 
 		try {
@@ -48,9 +47,8 @@ export const execute = async (interaction) => {
 				content: 'You have no access to the bot or a internal error accured.',
 				ephemeral: true,
 			});
-		}
-		catch (e2){
-			console.log(e2)
+		} catch (e2) {
+			console.log(e2);
 		}
 	}
 
@@ -97,7 +95,7 @@ const answerButtons = (clanVotings, userId) => {
 		const arrayOfButtons = [];
 		for (const vote in clanVotings.questOptions) {
 			arrayOfButtons.push(new ButtonBuilder()
-				.setCustomId(questIds[vote] + ':' + mode + ':' + (userVote[vote] ? 'false' : 'true'))
+				.setCustomId(questIds[vote] + ':' + mode + ':' + (mode == 'voting' ? (userVote[vote] ? 'false' : 'true') : (userParticipate[vote] ? 'false' : 'true')))
 				.setLabel((mode == 'voting' ? '🗳' : '👍') + names[vote])
 				.setStyle(((mode == 'voting' ? userVote[vote] : userParticipate[vote]) ? ButtonStyle.Success : ButtonStyle.Danger)),
 			);
@@ -234,7 +232,6 @@ const response = async (interaction, clanVotings, userData) => {
 						const voteOption = getVoted(userId, (i.customId.split(':')[2] == 'true'), null);
 
 						addUpdateVoting(clanVotings._id, userId, questOption.id, voteOption).then(async d => {
-
 							const newAttachment = await votingOverviewImage(d, userId);
 							const newVotingButtons = answerButtons(d, userId);
 							i.editReply({
@@ -248,8 +245,8 @@ const response = async (interaction, clanVotings, userData) => {
 						break;
 					}
 					else if (i.customId.split(':')[1] == 'participation') {
-						const voteOption = getVoted(userId, null, (i.customId.split(':')[2] == 'true'));
 
+						const voteOption = getVoted(userId, null, (i.customId.split(':')[2] == 'true'));
 						addUpdateVoting(clanVotings._id, userId, questOption.id, voteOption).then(async d => {
 
 							const newAttachment = await votingOverviewImage(d, userId);
