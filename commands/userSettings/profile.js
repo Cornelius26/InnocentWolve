@@ -73,10 +73,10 @@ const profileImage = async (clanMember, wolvesvilleMemberData) => {
 	return loadImage(url).then(image => {
 		return loadImage('https://cdn.wolvesville.com/backgrounds/wolvesville_large_day.wide@2x.png').then(backgroundimage => {
 			const neededHeight = image.height;
-			const maxWidthImages = backgroundimage.width + image.width;
+			const maxWidthImages = image.width;
 
 
-			const canvas = createCanvas(maxWidthImages, neededHeight);
+			const canvas = createCanvas(backgroundimage.width+300, neededHeight);
 			const getTextWidth = (text, font) => {
 				// if given, use cached canvas for better performance
 				// else, create new canvas
