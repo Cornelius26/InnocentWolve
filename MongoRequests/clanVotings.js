@@ -51,8 +51,6 @@ export const createVoting = async (wolvesVilleClanId, clanId) => {
 export const addUpdateVoting = async (voteId, userId, option, voting) => {
 	return QuestVotings.findById(voteId).exec().then(foundVoting => {
 		for (const questOption of foundVoting.questOptions) {
-			console.log(option);
-			console.log(questOption.id);
 			if (questOption.id == option) {
 				let found = false;
 				for (const givenVoting of questOption.votings) {
@@ -72,10 +70,9 @@ export const addUpdateVoting = async (voteId, userId, option, voting) => {
 						if (givenVoting.votedFor == true) {
 							givenVoting.participation = true;
 						}
-						console.log(givenVoting);
 						break;
 					}
-				}
+
 				if (!found) {
 					if (voting.votedFor == null) {
 						voting.votedFor = false;

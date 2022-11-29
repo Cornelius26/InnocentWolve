@@ -42,10 +42,16 @@ export const execute = async (interaction) => {
 	}
 	catch (e) {
 		console.log(e);
-		interaction.editReply({
-			content: 'You have no access to the bot or a internal error accured.',
-			ephemeral: true,
-		});
+
+		try {
+			interaction.editReply({
+				content: 'You have no access to the bot or a internal error accured.',
+				ephemeral: true,
+			});
+		}
+		catch (e2){
+			console.log(e2)
+		}
 	}
 
 
@@ -71,7 +77,7 @@ const answerButtons = (clanVotings, userId) => {
 			if (vote.votedFor == true) {
 				voteCount++;
 			}
-			if (vote.clanMemberId.toString() == userId.toString()) {
+			if (vote.clanMemberId._id.toString() == userId.toString()) {
 				if (vote.votedFor == true) {
 					localUserVote = true;
 				}
@@ -86,6 +92,7 @@ const answerButtons = (clanVotings, userId) => {
 		const urlSplitted = option.promoImageUrl.split('/');
 		names.push(urlSplitted[urlSplitted.length - 1].slice(0, -4).toUpperCase());
 	}
+
 	const getButtons = (mode) => {
 		const arrayOfButtons = [];
 		for (const vote in clanVotings.questOptions) {
