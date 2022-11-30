@@ -4,6 +4,7 @@ import { getClanMembers, getWolvesvilleClan } from '../../wolvesVille/WolvesVill
 import { getClan, setColeaderAccess } from '../../MongoRequests/clans.js';
 import { checkAccessRight } from '../../accessManager.js';
 
+process.env.TZ = 'Europe/Berlin';
 export const data = new SlashCommandBuilder()
 	.setName('set_permissions')
 	.setDMPermission(false)

@@ -14,6 +14,7 @@ import { getLastVoting, getLastVotingWeek } from '../../MongoRequests/clanVoting
 import { createCanvas, loadImage } from '@napi-rs/canvas';
 import { questVotings } from '../../mongoModel.js';
 
+process.env.TZ = 'Europe/Berlin';
 export const data = new SlashCommandBuilder()
 	.setName('voting_result_leader')
 	.setDMPermission(false)

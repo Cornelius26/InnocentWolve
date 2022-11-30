@@ -3,9 +3,9 @@ import { clanMembers as ClanMembers, clans as Clans } from '../mongoModel.js';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import * as dotenv from 'dotenv';
-import mongoose from 'mongoose';
-import { Integration } from 'discord.js';
 
+
+process.env.TZ = 'Europe/Berlin';
 const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname(__filename);

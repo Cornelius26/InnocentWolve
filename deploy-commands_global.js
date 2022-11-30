@@ -9,8 +9,9 @@ const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname(__filename);
 
-dotenv.config();
+process.env.TZ = 'Europe/Berlin';
 
+dotenv.config();
 
 const commands = [];
 // Grab all the command files from the commands directory you created earlier

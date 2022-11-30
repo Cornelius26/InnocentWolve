@@ -9,6 +9,7 @@ import { addUpdateVoting, getLastVoting } from '../../MongoRequests/clanVotings.
 import { createCanvas, loadImage } from '@napi-rs/canvas';
 import { checkAccessRight } from '../../accessManager.js';
 
+process.env.TZ = 'Europe/Berlin';
 
 export const data = new SlashCommandBuilder()
 	.setName('vote')

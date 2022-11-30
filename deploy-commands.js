@@ -5,6 +5,9 @@ import { fileURLToPath } from 'url';
 import * as dotenv from 'dotenv';
 import fs from 'fs';
 
+
+process.env.TZ = 'Europe/Berlin';
+
 const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname(__filename);

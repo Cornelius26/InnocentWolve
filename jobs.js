@@ -1,4 +1,5 @@
 import * as clanRequests from './MongoRequests/clans.js';
+
 import {
 	getAuthorizedClans,
 	getClanChat,
@@ -15,6 +16,8 @@ import {
 import { updateClanChatCheck, updateLedgerTime } from './MongoRequests/clans.js';
 import { createVoting, endVoting, getLastVoting, setQuestStarted } from './MongoRequests/clanVotings.js';
 
+
+process.env.TZ = 'Europe/Berlin';
 
 const deactivateClans = (activeClans, authorizedClans, next) => {
 	for (let i = 0; i < activeClans.length; i++) {

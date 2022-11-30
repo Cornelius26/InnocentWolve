@@ -6,6 +6,7 @@ import { createCanvas, loadImage, GlobalFonts } from '@napi-rs/canvas';
 import { checkAccessRight } from '../../accessManager.js';
 import { getUserById } from '../../wolvesVille/WolvesVilleRequests.js';
 
+process.env.TZ = 'Europe/Berlin';
 
 /**
  * Create Command to Show Profile

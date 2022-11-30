@@ -3,6 +3,7 @@ import { getUserByName, getWolvesvilleClan } from '../../wolvesVille/WolvesVille
 import { createMember, getMember } from '../../MongoRequests/clanMembers.js';
 import { getClan, setClanDiscordId } from '../../MongoRequests/clans.js';
 
+process.env.TZ = 'Europe/Berlin';
 export const data = new SlashCommandBuilder()
 	.setName('register')
 	.setDMPermission(false)

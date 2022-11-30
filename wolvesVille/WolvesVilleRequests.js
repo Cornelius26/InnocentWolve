@@ -5,8 +5,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 import dotenv from 'dotenv';
-import { clanMembers } from '../mongoModel.js';
-
+process.env.TZ = 'Europe/Berlin';
 superagentRetryDelay(superagent);
 
 const __filename = fileURLToPath(import.meta.url);
