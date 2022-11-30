@@ -16,7 +16,7 @@ import {
 } from '../../MongoRequests/clans.js';
 import { checkAccessRight } from '../../accessManager.js';
 
-process.env.TZ = 'Europe/Berlin';
+
 export const data = new SlashCommandBuilder()
 	.setName('quest_start_settings')
 	.setDMPermission(false)

@@ -1,6 +1,5 @@
 import mongoose from './mongoConnection.js';
 
-process.env.TZ = 'Europe/Berlin';
 const Schema = mongoose.Schema;
 
 const clansSchema = new Schema({

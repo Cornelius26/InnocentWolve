@@ -12,7 +12,6 @@ const __dirname = path.dirname(__filename);
 
 dotenv.config(__dirname);
 
-process.env.TZ = 'Europe/Berlin';
 
 
 const MONGO_URI = `mongodb+srv://${process.env.MONGO_DB_USERNAME}:${process.env.MONGO_DB_PASSWORD}@innocentwolvedata.5rhmcnq.mongodb.net/${process.env.ENVIROMENT}?retryWrites=true&w=majority`;

@@ -1,8 +1,6 @@
 import { getMember, getMemberByDiscordId } from './MongoRequests/clanMembers.js';
 import { getClanMembers, getWolvesvilleClan } from './wolvesVille/WolvesVilleRequests.js';
 
-process.env.TZ = 'Europe/Berlin';
-
 export const checkAccessRight = async (interaction) => {
 	return getMemberByDiscordId(interaction.user.id).then(userData => {
 		if (userData === null) return ['noAccess', null, userData];

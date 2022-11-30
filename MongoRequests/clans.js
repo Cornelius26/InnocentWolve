@@ -1,6 +1,5 @@
 import { clans as Clans } from '../mongoModel.js';
 
-process.env.TZ = 'Europe/Berlin';
 
 export const getAllClans = async () => {
 	return await Clans.find().exec().then(data => {

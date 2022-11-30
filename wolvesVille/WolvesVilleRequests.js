@@ -5,7 +5,6 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 import dotenv from 'dotenv';
-process.env.TZ = 'Europe/Berlin';
 superagentRetryDelay(superagent);
 
 const __filename = fileURLToPath(import.meta.url);

@@ -10,7 +10,6 @@ import {
 } from '../../MongoRequests/clans.js';
 import { checkAccessRight } from '../../accessManager.js';
 
-process.env.TZ = 'Europe/Berlin';
 export const data = new SlashCommandBuilder()
 	.setName('settings_vote_end_time')
 	.setDMPermission(false)

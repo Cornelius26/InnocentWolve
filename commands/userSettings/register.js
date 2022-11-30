@@ -1,9 +1,8 @@
 import { SlashCommandBuilder } from 'discord.js';
 import { getUserByName, getWolvesvilleClan } from '../../wolvesVille/WolvesVilleRequests.js';
-import { createMember, getMember } from '../../MongoRequests/clanMembers.js';
+import { createMember } from '../../MongoRequests/clanMembers.js';
 import { getClan, setClanDiscordId } from '../../MongoRequests/clans.js';
 
-process.env.TZ = 'Europe/Berlin';
 export const data = new SlashCommandBuilder()
 	.setName('register')
 	.setDMPermission(false)

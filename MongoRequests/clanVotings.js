@@ -2,8 +2,6 @@ import { questVotings as QuestVotings } from '../mongoModel.js';
 import { getQuestes } from '../wolvesVille/WolvesVilleRequests.js';
 
 
-process.env.TZ = 'Europe/Berlin';
-
 export const getLastVoting = async (clanId) => {
 	return QuestVotings.findOne({ votingForClan: clanId }).sort({ votingStarted: -1 }).populate('questOptions.votings.clanMemberId').exec().then(d => {
 		return d;

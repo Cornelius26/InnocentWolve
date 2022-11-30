@@ -17,9 +17,6 @@ import { updateClanChatCheck, updateLedgerTime } from './MongoRequests/clans.js'
 import { createVoting, endVoting, getLastVoting, setQuestStarted } from './MongoRequests/clanVotings.js';
 
 
-process.env.TZ = 'Europe/Berlin';
-
-
 const deactivateClans = (activeClans, authorizedClans, next) => {
 	for (let i = 0; i < activeClans.length; i++) {
 		const checkMissingClan = (obj) => obj.id === activeClans[i].clanId;
