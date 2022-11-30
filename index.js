@@ -18,7 +18,7 @@ const token = process.env.DISCORD_TOKEN;
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.commands = new Collection();
-
+process.env.TZ = 'Europe/Berlin';
 const getInteractions = async (userPath) => {
 	const commandsPath = path.join(__dirname, userPath);
 	const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
@@ -58,7 +58,8 @@ client.on(Events.InteractionCreate, async interaction => {
 
 	try {
 		await command.execute(interaction);
-	} catch (error) {
+	}
+	catch (error) {
 		console.error(error);
 		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
 	}

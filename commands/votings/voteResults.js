@@ -64,8 +64,6 @@ const buildVotingResult = async (voting) => {
 	const subtitleHeight = 16;
 
 
-
-
 	for (const option of voting.questOptions) {
 		const urlSplitted = option.promoImageUrl.split('/');
 		names.push(urlSplitted[urlSplitted.length - 1].slice(0, -4).toUpperCase());
