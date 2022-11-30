@@ -129,7 +129,7 @@ const checkVotingStarts = async (allClans) => {
 		if (clan.settings.autoNewVotingEnabled) {
 			const clanDay = parseInt(clan.settings.autoVotingTimeStart.slice(0, 1));
 			const clanHour = parseInt(clan.settings.autoVotingTimeStart.slice(2, 4));
-			const clanMinute = parseInt(clan.settings.autoVotingTimeStart.slice(5, 7)) - 10;
+			const clanMinute = parseInt(clan.settings.autoVotingTimeStart.slice(5, 7)) ;
 			getLastVoting(clan._id).then(d => {
 				if (d == null || d.votingActive == false) {
 					if (d == null || d.calenderWeek < new Date().getWeekNumber()) {
@@ -167,10 +167,11 @@ const checkVotingEnds = async (allClans) => {
 		if (clan.settings.autoNewVotingEnabled) {
 			const clanDay = parseInt(clan.settings.autoVotingTimeEnd.slice(0, 1));
 			const clanHour = parseInt(clan.settings.autoVotingTimeEnd.slice(2, 4));
-			const clanMinute = parseInt(clan.settings.autoVotingTimeEnd.slice(5, 7)) - 10;
+			const clanMinute = parseInt(clan.settings.autoVotingTimeEnd.slice(5, 7));
 			console.log(clanDay);
 			console.log(day);
 			getLastVoting(clan._id).then(d => {
+
 				if (d != null && d.votingActive == true) {
 					if (d == null || d.calenderWeek <= new Date().getWeekNumber()) {
 
@@ -230,7 +231,7 @@ const checkQuestStart = async (clan, clanMembers, wolvesvilleClanMembers) => {
 	if (clan.settings.autoQuestStartEnabled) {
 		const clanDay = parseInt(clan.settings.autoQuestStartTime.slice(0, 1));
 		const clanHour = parseInt(clan.settings.autoQuestStartTime.slice(2, 4));
-		const clanMinute = parseInt(clan.settings.autoQuestStartTime.slice(5, 7)) - 10;
+		const clanMinute = parseInt(clan.settings.autoQuestStartTime.slice(5, 7)) ;
 		getLastVoting(clan._id).then(async voting => {
 			if (voting != null && voting.questStarted == false) {
 				if (voting == null || voting.calenderWeek <= new Date().getWeekNumber()) {
