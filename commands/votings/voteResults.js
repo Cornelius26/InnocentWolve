@@ -64,11 +64,8 @@ const buildVotingResult = async (voting) => {
 	const subtitleHeight = 16;
 
 
-	const max = Math.max.apply(null, numberOfVotes);
-	const itemWonIndex = numberOfVotes.indexOf(max);
 
 
-	let c = 0;
 	for (const option of voting.questOptions) {
 		const urlSplitted = option.promoImageUrl.split('/');
 		names.push(urlSplitted[urlSplitted.length - 1].slice(0, -4).toUpperCase());
@@ -96,6 +93,10 @@ const buildVotingResult = async (voting) => {
 		}
 		numberOfVotes.push(voteCount);
 	}
+
+	const max = Math.max.apply(null, numberOfVotes);
+	const itemWonIndex = numberOfVotes.indexOf(max);
+
 	let neededHeight = 0;
 	neededHeight += margins + titleHeight;
 	neededHeight += margins;
@@ -131,10 +132,13 @@ const buildVotingResult = async (voting) => {
 		textPosition += images[counter].height + smallMargins + titleHeight;
 		context.font = process.env.ENVIROMENT == 'production' ? `${titleHeight}px DejaVu Sans` : `${titleHeight}px sans-serif`;
 		context.fillText(names[counter], leftMargin, textPosition);
+
 		if (counter == itemWonIndex) {
 			textPosition += smallMargins + subtitleHeight;
+			context.fillStyle = '#ffdc00';
 			context.font = process.env.ENVIROMENT == 'production' ? `${subtitleHeight}px DejaVu Sans` : `${subtitleHeight}px sans-serif`;
 			context.fillText('WINNER', leftMargin, textPosition);
+			context.fillStyle = '#ffffff';
 		}
 
 		textPosition += smallMargins + titleHeight;

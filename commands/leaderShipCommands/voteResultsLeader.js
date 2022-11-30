@@ -154,7 +154,9 @@ const buildVotingResult = async (voting) => {
 		if (counter == itemWonIndex) {
 			textPosition += smallMargins + subtitleHeight;
 			context.font = process.env.ENVIROMENT == 'production' ? `${subtitleHeight}px DejaVu Sans` : `${subtitleHeight}px sans-serif`;
+			context.fillStyle = '#ffdc00';
 			context.fillText('WINNER', leftMargin, textPosition);
+			context.fillStyle = '#ffffff';
 		}
 
 		textPosition += smallMargins + titleHeight;
