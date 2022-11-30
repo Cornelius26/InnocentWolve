@@ -19,6 +19,7 @@ import { createVoting, endVoting, getLastVoting, setQuestStarted } from './Mongo
 
 process.env.TZ = 'Europe/Berlin';
 
+
 const deactivateClans = (activeClans, authorizedClans, next) => {
 	for (let i = 0; i < activeClans.length; i++) {
 		const checkMissingClan = (obj) => obj.id === activeClans[i].clanId;

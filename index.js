@@ -19,6 +19,7 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.commands = new Collection();
 process.env.TZ = 'Europe/Berlin';
+console.log(new Date())
 const getInteractions = async (userPath) => {
 	const commandsPath = path.join(__dirname, userPath);
 	const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
