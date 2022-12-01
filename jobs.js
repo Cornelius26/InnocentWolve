@@ -265,7 +265,8 @@ const checkQuestStart = async (clan, clanMembers, wolvesvilleClanMembers) => {
 						for (const clanMember of clanMembers) {
 							let participates = false;
 							for (const voter of voting.questOptions[itemWonIndex].votings) {
-								if (clanMember._id == voter.clanMemberId) {
+								console.log(voter)
+								if (clanMember._id == voter.clanMemberId._id) {
 									console.log('found');
 									participates = voter.participation;
 								}
