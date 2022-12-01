@@ -77,7 +77,7 @@ const userHasAccessResponse = (interaction, clanInformation) => {
 			setColeaderAccess(i.guildId, (i.values[0] == 'true')).then(d => {
 				const menuNew = row(d.settings.allowCoLeaderAccess);
 				i.editReply({
-					content: 'Innocent Wolve Settings  | UPDATED: ' + moment().tz("Europe/Berlin").toDate().toLocaleString(),
+					content: 'Innocent Wolve Settings  | UPDATED: ' + moment(new Date()).tz("Europe/Berlin").toDate().toLocaleString(),
 					components: [menuNew],
 					ephemeral: true,
 				});

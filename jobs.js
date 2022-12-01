@@ -119,13 +119,13 @@ Date.prototype.getWeekNumber = function() {
 };
 
 const checkVotingStarts = async (allClans) => {
-	let day = moment().tz("Europe/Berlin").toDate().getDay();
+	let day = moment(new Date()).tz("Europe/Berlin").toDate().getDay();
 	day -= 1;
 	if (day == -1) {
 		day = 6;
 	}
-	const hour = moment().tz("Europe/Berlin").toDate().getHours();
-	const minute = moment().tz("Europe/Berlin").toDate().getMinutes();
+	const hour = moment(new Date()).tz("Europe/Berlin").toDate().getHours();
+	const minute = moment(new Date()).tz("Europe/Berlin").toDate().getMinutes();
 	for (const clan of allClans) {
 		if (clan.settings.autoNewVotingEnabled) {
 			const clanDay = parseInt(clan.settings.autoVotingTimeStart.slice(0, 1));
@@ -133,7 +133,7 @@ const checkVotingStarts = async (allClans) => {
 			const clanMinute = parseInt(clan.settings.autoVotingTimeStart.slice(5, 7)) ;
 			getLastVoting(clan._id).then(d => {
 				if (d == null || d.votingActive == false) {
-					if (d == null || d.calenderWeek < moment().tz("Europe/Berlin").toDate().getWeekNumber()) {
+					if (d == null || d.calenderWeek < moment(new Date()).tz("Europe/Berlin").toDate().getWeekNumber()) {
 
 						if (clanDay < day ||
 							(clanDay == day &&
@@ -157,23 +157,23 @@ const checkVotingStarts = async (allClans) => {
 	}
 };
 const checkVotingEnds = async (allClans) => {
-	let day = moment().tz("Europe/Berlin").toDate().getDay();
+	let day = moment(new Date()).tz("Europe/Berlin").toDate().getDay();
 	day -= 1;
 	if (day == -1) {
 		day = 6;
 	}
-	const hour = moment().tz("Europe/Berlin").toDate().getHours();
-	const minute = moment().tz("Europe/Berlin").toDate().getMinutes();
+	const hour = moment(new Date()).tz("Europe/Berlin").toDate().getHours();
+	const minute = moment(new Date()).tz("Europe/Berlin").toDate().getMinutes();
 	for (const clan of allClans) {
 		if (clan.settings.autoNewVotingEnabled) {
 			const clanDay = parseInt(clan.settings.autoVotingTimeEnd.slice(0, 1));
 			const clanHour = parseInt(clan.settings.autoVotingTimeEnd.slice(2, 4));
 			const clanMinute = parseInt(clan.settings.autoVotingTimeEnd.slice(5, 7));
-			console.log(moment().tz("Europe/Berlin").toDate())
+			console.log(moment(new Date()).tz("Europe/Berlin").toDate())
 			getLastVoting(clan._id).then(d => {
 
 				if (d != null && d.votingActive == true) {
-					if (d == null || d.calenderWeek <= moment().tz("Europe/Berlin").toDate().getWeekNumber()) {
+					if (d == null || d.calenderWeek <= moment(new Date()).tz("Europe/Berlin").toDate().getWeekNumber()) {
 
 						if (clanDay < day ||
 							(clanDay == day &&
@@ -198,7 +198,7 @@ const checkVotingEnds = async (allClans) => {
 };
 const checkLedger = async allClans => {
 	for (const clan of allClans) {
-		const ledgerTime = moment().tz("Europe/Berlin").toDate();
+		const ledgerTime = moment(new Date()).tz("Europe/Berlin").toDate();
 		getLedger(clan.clanId).then(d => {
 			const ledger = d.body;
 			try {
@@ -221,20 +221,20 @@ const checkLedger = async allClans => {
 	}
 };
 const checkQuestStart = async (clan, clanMembers, wolvesvilleClanMembers) => {
-	let day = moment().tz("Europe/Berlin").toDate().getDay();
+	let day = moment(new Date()).tz("Europe/Berlin").toDate().getDay();
 	day -= 1;
 	if (day == -1) {
 		day = 6;
 	}
-	const hour = moment().tz("Europe/Berlin").toDate().getHours();
-	const minute = moment().tz("Europe/Berlin").toDate().getMinutes();
+	const hour = moment(new Date()).tz("Europe/Berlin").toDate().getHours();
+	const minute = moment(new Date()).tz("Europe/Berlin").toDate().getMinutes();
 	if (clan.settings.autoQuestStartEnabled) {
 		const clanDay = parseInt(clan.settings.autoQuestStartTime.slice(0, 1));
 		const clanHour = parseInt(clan.settings.autoQuestStartTime.slice(2, 4));
 		const clanMinute = parseInt(clan.settings.autoQuestStartTime.slice(5, 7)) ;
 		getLastVoting(clan._id).then(async voting => {
 			if (voting != null && voting.questStarted == false) {
-				if (voting == null || voting.calenderWeek <= moment().tz("Europe/Berlin").toDate().getWeekNumber()) {
+				if (voting == null || voting.calenderWeek <= moment(new Date()).tz("Europe/Berlin").toDate().getWeekNumber()) {
 
 					if (clanDay < day ||
 						(clanDay == day &&

@@ -101,7 +101,7 @@ const userHasAccessResponse = (interaction, clanInformation) => {
 			setAutomaticVoteStart(i.guildId, (i.values[0] == 'true')).then(d => {
 				const newMenu = [autoVoteStart(d.settings.autoNewVotingEnabled)];
 				i.editReply({
-					content: 'Innocent Wolve Vote Start Settings | UPDATED: ' + moment().tz("Europe/Berlin").toDate().toLocaleString(),
+					content: 'Innocent Wolve Vote Start Settings | UPDATED: ' + moment(new Date()).tz("Europe/Berlin").toDate().toLocaleString(),
 					components: newMenu,
 					ephemeral: true,
 				});

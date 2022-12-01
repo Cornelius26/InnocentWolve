@@ -64,7 +64,7 @@ export const createMember = async (userID, localClanId, discordId) => {
 				authenticationDiscordID: discordId,
 				clanId: localClanId,
 				authenticationCode: authCode,
-				authenticationCodeValidUntil: moment().tz("Europe/Berlin").toDate().setDate(moment().tz("Europe/Berlin").toDate().getDate() + parseInt(CodeValidDays)),
+				authenticationCodeValidUntil: moment(new Date()).tz("Europe/Berlin").toDate().setDate(moment(new Date()).tz("Europe/Berlin").toDate().getDate() + parseInt(CodeValidDays)),
 			});
 			try {
 				newMember.save();
@@ -88,7 +88,7 @@ export const getPendingCodes = async (clanId) => {
 			clanId = clan._id;
 			return ClanMembers.find({
 				clanId: clanId,
-				authenticationCodeValidUntil: { $gt: moment().tz("Europe/Berlin").toDate() },
+				authenticationCodeValidUntil: { $gt: moment(new Date()).tz("Europe/Berlin").toDate() },
 			})
 				.exec()
 				.then(data => {

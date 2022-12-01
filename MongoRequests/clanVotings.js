@@ -43,7 +43,7 @@ export const createVoting = async (wolvesVilleClanId, clanId) => {
 		}
 		const voting = new QuestVotings({
 			votingForClan: clanId,
-			calenderWeek: moment().tz("Europe/Berlin").toDate().getWeekNumber(),
+			calenderWeek: moment(new Date()).tz("Europe/Berlin").toDate().getWeekNumber(),
 			questOptions: questOptions,
 		});
 		voting.save();
@@ -93,7 +93,7 @@ export const addUpdateVoting = async (voteId, userId, option, voting) => {
 };
 export const endVoting = (voting_id) => {
 	return QuestVotings.findById(voting_id).exec().then(quest => {
-		quest.votingEnded = moment().tz("Europe/Berlin").toDate();
+		quest.votingEnded = moment(new Date()).tz("Europe/Berlin").toDate();
 		quest.votingActive = false;
 		return quest.save();
 	});
@@ -102,7 +102,7 @@ export const setQuestStarted = (voting_id, wonIndex) => {
 	return QuestVotings.findById(voting_id).exec().then(quest => {
 		quest.questWon = wonIndex;
 		quest.questStarted = true;
-		quest.questStartedDate = moment().tz("Europe/Berlin").toDate();
+		quest.questStartedDate = moment(new Date()).tz("Europe/Berlin").toDate();
 		return quest.save();
 	});
 };

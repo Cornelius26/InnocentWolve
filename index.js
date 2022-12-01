@@ -16,7 +16,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 dotenv.config();
-console.log(moment().tz("Europe/Berlin").toDate())
+console.log(moment(new Date()).tz("Europe/Berlin").toDate())
 
 const token = process.env.DISCORD_TOKEN;
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
