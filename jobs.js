@@ -270,13 +270,14 @@ const checkQuestStart = async (clan, clanMembers, wolvesvilleClanMembers) => {
 									participates = voter.participation;
 								}
 							}
-							if (voting.questOptions[itemWonIndex].purchasableWithGems) {
-								await removeGoldAndGemFromUser(clan._id, clanMember.wolvesvilleId, 0, clan.settings.defaultQuestPriceGold);
-							}
-							else {
-								await removeGoldAndGemFromUser(clan._id, clanMember.wolvesvilleId, clan.settings.defaultQuestPriceGold, 0);
-							}
+
 							if (participates == true) {
+								if (voting.questOptions[itemWonIndex].purchasableWithGems) {
+									await removeGoldAndGemFromUser(clan._id, clanMember.wolvesvilleId, 0, clan.settings.defaultQuestPriceGold);
+								}
+								else {
+									await removeGoldAndGemFromUser(clan._id, clanMember.wolvesvilleId, clan.settings.defaultQuestPriceGold, 0);
+								}
 								await setClanMemberParticipation(clan.clanId, clanMember.wolvesvilleId, participates);
 							}
 						}
