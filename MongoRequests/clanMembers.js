@@ -9,7 +9,7 @@ import moment from 'moment-timezone';
 const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname(__filename);
-
+//HELP
 dotenv.config(__dirname);
 
 const CodeValidDays = process.env.CODE_VALID_DAYS;
@@ -18,6 +18,7 @@ const CodeValidDays = process.env.CODE_VALID_DAYS;
 export const getMember = async (id) => {
 	return ClanMembers.findOne({ id: id }).populate('clanId').exec().then(data => {
 		return data;
+
 	}).catch(err => {
 		throw new Error(err);
 	});
