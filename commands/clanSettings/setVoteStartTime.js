@@ -6,6 +6,7 @@ import {
 import { setAutomaticQuestStartTime, setAutomaticVoteStartTime } from '../../MongoRequests/clans.js';
 import { checkAccessRight } from '../../accessManager.js';
 
+import moment from 'moment-timezone';
 export const data = new SlashCommandBuilder()
 	.setName('settings_vote_start_time')
 	.setDMPermission(false)
@@ -109,7 +110,7 @@ const userHasAccessResponse = (interaction, clanInformation) => {
 			setAutomaticVoteStartTime(i.guildId, 0, i.values[0]).then(d => {
 				const newMenu = voteStartTime(d.settings.autoVotingTimeStart);
 				i.editReply({
-					content: 'Innocent Wolve Quest Start Settings | UPDATED: ' + new Date().toLocaleString() + '\n' +
+					content: 'Innocent Wolve Quest Start Settings | UPDATED: ' + moment().tz("Europe/Berlin").toDate().toLocaleString() + '\n' +
 						'The format for the questStart below is\n' +
 						'day 0 - Monday | 6 - Sunday\n' +
 						'hour\n' +
@@ -125,7 +126,7 @@ const userHasAccessResponse = (interaction, clanInformation) => {
 			setAutomaticVoteStartTime(i.guildId, 1, i.values[0]).then(d => {
 				const newMenu = voteStartTime(d.settings.autoVotingTimeStart);
 				i.editReply({
-					content: 'Innocent Wolve Quest Start Settings | UPDATED: ' + new Date().toLocaleString() + '\n' +
+					content: 'Innocent Wolve Quest Start Settings | UPDATED: ' + moment().tz("Europe/Berlin").toDate().toLocaleString() + '\n' +
 						'The format for the questStart below is\n' +
 						'day 0 - Monday | 6 - Sunday\n' +
 						'hour\n' +
@@ -141,7 +142,7 @@ const userHasAccessResponse = (interaction, clanInformation) => {
 			setAutomaticVoteStartTime(i.guildId, 2, i.values[0]).then(d => {
 				const newMenu = voteStartTime(d.settings.autoVotingTimeStart);
 				i.editReply({
-					content: 'Innocent Wolve Quest Start Settings | UPDATED: ' + new Date().toLocaleString() + '\n' +
+					content: 'Innocent Wolve Quest Start Settings | UPDATED: ' + moment().tz("Europe/Berlin").toDate().toLocaleString() + '\n' +
 						'The format for the questStart below is\n' +
 						'day 0 - Monday | 6 - Sunday\n' +
 						'hour\n' +

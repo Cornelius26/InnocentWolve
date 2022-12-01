@@ -8,6 +8,7 @@ import { fileURLToPath } from 'url';
 import schedule from 'node-schedule';
 import allJobs from './jobs.js';
 import { global_command_deploy } from './deploy-commands_global.js';
+import moment from 'moment-timezone';
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -15,8 +16,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 dotenv.config();
-console.log(process.env.TZ)
-console.log(new Date())
+console.log(moment().tz("Europe/Berlin").toDate())
 
 const token = process.env.DISCORD_TOKEN;
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });

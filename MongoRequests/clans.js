@@ -1,5 +1,6 @@
 import { clans as Clans } from '../mongoModel.js';
 
+import moment from 'moment-timezone';
 
 export const getAllClans = async () => {
 	return await Clans.find().exec().then(data => {
@@ -24,7 +25,7 @@ export const getClan = async (clanId) => {
 	});
 };
 export const updateClanChatCheck = async (clanObjectId) => {
-	return Clans.findByIdAndUpdate(clanObjectId, { lastCheckChat: new Date() });
+	return Clans.findByIdAndUpdate(clanObjectId, { lastCheckChat: moment().tz("Europe/Berlin").toDate() });
 };
 export const setClanDiscordId = async (clanId, discordId) => {
 	return Clans.findOne({ clanId: clanId }).exec().then(foundClan => {
@@ -39,7 +40,7 @@ export const createClan = (clanId) => {
 export const deactivateClan = (clanId) => {
 	Clans.findOneAndUpdate(
 		{ clanId: clanId },
-		{ clanActive: false, clanInactiveSince: new Date() })
+		{ clanActive: false, clanInactiveSince: moment().tz("Europe/Berlin").toDate() })
 		.exec();
 };
 

@@ -17,6 +17,7 @@ import {
 import { checkAccessRight } from '../../accessManager.js';
 
 
+import moment from 'moment-timezone';
 export const data = new SlashCommandBuilder()
 	.setName('settings_vote_start_enablement')
 	.setDMPermission(false)
@@ -100,7 +101,7 @@ const userHasAccessResponse = (interaction, clanInformation) => {
 			setAutomaticVoteStart(i.guildId, (i.values[0] == 'true')).then(d => {
 				const newMenu = [autoVoteStart(d.settings.autoNewVotingEnabled)];
 				i.editReply({
-					content: 'Innocent Wolve Vote Start Settings | UPDATED: ' + new Date().toLocaleString(),
+					content: 'Innocent Wolve Vote Start Settings | UPDATED: ' + moment().tz("Europe/Berlin").toDate().toLocaleString(),
 					components: newMenu,
 					ephemeral: true,
 				});
