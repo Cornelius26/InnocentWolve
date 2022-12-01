@@ -4,13 +4,10 @@ import {
 	SlashCommandBuilder,
 } from 'discord.js';
 import {
-	setAutomaticQuestStartTime,
 	setAutomaticVoteEndTime,
-	setAutomaticVoteStartTime,
 } from '../../MongoRequests/clans.js';
 import { checkAccessRight } from '../../accessManager.js';
 
-import moment from 'moment-timezone';
 export const data = new SlashCommandBuilder()
 	.setName('settings_vote_end_time')
 	.setDMPermission(false)
