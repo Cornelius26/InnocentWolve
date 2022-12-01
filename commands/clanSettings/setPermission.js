@@ -5,7 +5,6 @@ import { getClan, setColeaderAccess } from '../../MongoRequests/clans.js';
 import { checkAccessRight } from '../../accessManager.js';
 
 
-import moment from 'moment-timezone';
 export const data = new SlashCommandBuilder()
 	.setName('set_permissions')
 	.setDMPermission(false)
