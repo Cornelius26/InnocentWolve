@@ -9,7 +9,7 @@ import moment from 'moment-timezone';
 const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname(__filename);
-//HELP
+
 dotenv.config(__dirname);
 
 const CodeValidDays = process.env.CODE_VALID_DAYS;
