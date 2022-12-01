@@ -1,23 +1,14 @@
 import {
 	ActionRowBuilder,
-	ButtonBuilder,
-	ButtonStyle,
 	SelectMenuBuilder,
 	SlashCommandBuilder,
-	TextInputBuilder,
 } from 'discord.js';
-import { getMember } from '../../MongoRequests/clanMembers.js';
-import { getClanMembers, getWolvesvilleClan } from '../../wolvesVille/WolvesVilleRequests.js';
 import {
-	getClan,
-	setAutomaticQuestStart,
-	setAutomaticQuestStartTime, setAutomaticVoteStart,
-	setColeaderAccess,
+	setAutomaticVoteStart,
 } from '../../MongoRequests/clans.js';
 import { checkAccessRight } from '../../accessManager.js';
 
 
-import moment from 'moment-timezone';
 export const data = new SlashCommandBuilder()
 	.setName('settings_vote_start_enablement')
 	.setDMPermission(false)
@@ -101,7 +92,7 @@ const userHasAccessResponse = (interaction, clanInformation) => {
 			setAutomaticVoteStart(i.guildId, (i.values[0] == 'true')).then(d => {
 				const newMenu = [autoVoteStart(d.settings.autoNewVotingEnabled)];
 				i.editReply({
-					content: 'Innocent Wolve Vote Start Settings | UPDATED: ' + moment(new Date()).tz("Europe/Berlin").toDate().toLocaleString(),
+					content: 'Innocent Wolve Vote Start Settings | UPDATED: ' + new Date().toLocaleString(),
 					components: newMenu,
 					ephemeral: true,
 				});

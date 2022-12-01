@@ -107,7 +107,7 @@ const userHasAccessResponse = (interaction, clanInformation) => {
 			setAutomaticVoteEndTime(i.guildId, 0, i.values[0]).then(d => {
 				const newMenu = voteEndTime(d.settings.autoVotingTimeEnd);
 				i.editReply({
-					content: 'Innocent Wolve Quest End Settings | UPDATED: ' + moment(new Date()).tz("Europe/Berlin").toDate().toLocaleString() + '\n' +
+					content: 'Innocent Wolve Quest End Settings | UPDATED: ' + new Date().toLocaleString() + '\n' +
 						'The format for the questStart below is\n' +
 						'day 0 - Monday | 6 - Sunday\n' +
 						'hour\n' +
@@ -123,7 +123,7 @@ const userHasAccessResponse = (interaction, clanInformation) => {
 			setAutomaticVoteEndTime(i.guildId, 1, i.values[0]).then(d => {
 				const newMenu = voteEndTime(d.settings.autoVotingTimeEnd);
 				i.editReply({
-					content: 'Innocent Wolve Quest Start Settings | UPDATED: ' + moment(new Date()).tz("Europe/Berlin").toDate().toLocaleString() + '\n' +
+					content: 'Innocent Wolve Quest Start Settings | UPDATED: ' + new Date().toLocaleString() + '\n' +
 						'The format for the questStart below is\n' +
 						'day 0 - Monday | 6 - Sunday\n' +
 						'hour\n' +
@@ -139,7 +139,7 @@ const userHasAccessResponse = (interaction, clanInformation) => {
 			setAutomaticVoteEndTime(i.guildId, 2, i.values[0]).then(d => {
 				const newMenu = voteEndTime(d.settings.autoVotingTimeEnd);
 				i.editReply({
-					content: 'Innocent Wolve Quest Start Settings | UPDATED: ' + moment(new Date()).tz("Europe/Berlin").toDate().toLocaleString() + '\n' +
+					content: 'Innocent Wolve Quest Start Settings | UPDATED: ' + new Date().toLocaleString() + '\n' +
 						'The format for the questStart below is\n' +
 						'day 0 - Monday | 6 - Sunday\n' +
 						'hour\n' +

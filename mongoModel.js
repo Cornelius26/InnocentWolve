@@ -1,13 +1,12 @@
 import mongoose from './mongoConnection.js';
 
-import moment from 'moment-timezone';
 const Schema = mongoose.Schema;
 
 const clansSchema = new Schema({
 	clanId: { type: String, required: true, unique: true },
 	guildId: { type: String, default: null, unique: true },
-	lastCheckLedger: { type: Date, required: true, default: moment(new Date()).tz("Europe/Berlin").toDate() },
-	lastCheckChat: { type: Date, required: true, default: moment(new Date()).tz("Europe/Berlin").toDate() },
+	lastCheckLedger: { type: Date, required: true, default: new Date() },
+	lastCheckChat: { type: Date, required: true, default: new Date() },
 	clanActive: { type: Boolean, required: true, default: true },
 	clanInactiveSince: { type: Date },
 	settings: {
@@ -58,7 +57,7 @@ const questVotingsSchema = new Schema({
 	votingForClan: { type: Schema.Types.ObjectId, ref: 'clans', required: true },
 	// check if active is current quest, else notify that owner has to update
 	votingActive: { type: Boolean, required: true, default: true },
-	votingStarted: { type: Date, required: true, default: moment(new Date()).tz("Europe/Berlin").toDate() },
+	votingStarted: { type: Date, required: true, default: new Date() },
 	calenderWeek: { type: Number, required: true },
 	votingEnded: { type: Date },
 	questStarted: { type: Boolean, required: true, default: false },

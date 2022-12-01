@@ -16,7 +16,6 @@ import {
 import { updateClanChatCheck, updateLedgerTime } from './MongoRequests/clans.js';
 import { createVoting, endVoting, getLastVoting, setQuestStarted } from './MongoRequests/clanVotings.js';
 
-import moment from 'moment-timezone';
 const deactivateClans = (activeClans, authorizedClans, next) => {
 	for (let i = 0; i < activeClans.length; i++) {
 		const checkMissingClan = (obj) => obj.id === activeClans[i].clanId;
@@ -119,13 +118,13 @@ Date.prototype.getWeekNumber = function() {
 };
 
 const checkVotingStarts = async (allClans) => {
-	let day = moment(new Date()).tz("Europe/Berlin").toDate().getDay();
+	let day = new Date().getDay();
 	day -= 1;
 	if (day == -1) {
 		day = 6;
 	}
-	const hour = moment(new Date()).tz("Europe/Berlin").toDate().getHours();
-	const minute = moment(new Date()).tz("Europe/Berlin").toDate().getMinutes();
+	const hour = new Date().getHours();
+	const minute = new Date().getMinutes();
 	for (const clan of allClans) {
 		if (clan.settings.autoNewVotingEnabled) {
 			const clanDay = parseInt(clan.settings.autoVotingTimeStart.slice(0, 1));
@@ -133,7 +132,7 @@ const checkVotingStarts = async (allClans) => {
 			const clanMinute = parseInt(clan.settings.autoVotingTimeStart.slice(5, 7)) ;
 			getLastVoting(clan._id).then(d => {
 				if (d == null || d.votingActive == false) {
-					if (d == null || d.calenderWeek < moment(new Date()).tz("Europe/Berlin").toDate().getWeekNumber()) {
+					if (d == null || d.calenderWeek < new Date().getWeekNumber()) {
 
 						if (clanDay < day ||
 							(clanDay == day &&
@@ -157,13 +156,13 @@ const checkVotingStarts = async (allClans) => {
 	}
 };
 const checkVotingEnds = async (allClans) => {
-	let day = moment(new Date()).tz("Europe/Berlin").toDate().getDay();
+	let day = new Date().getDay();
 	day -= 1;
 	if (day == -1) {
 		day = 6;
 	}
-	const hour = moment(new Date()).tz("Europe/Berlin").toDate().getHours();
-	const minute = moment(new Date()).tz("Europe/Berlin").toDate().getMinutes();
+	const hour = new Date().getHours();
+	const minute = new Date().getMinutes();
 	for (const clan of allClans) {
 		if (clan.settings.autoNewVotingEnabled) {
 			const clanDay = parseInt(clan.settings.autoVotingTimeEnd.slice(0, 1));
@@ -172,7 +171,7 @@ const checkVotingEnds = async (allClans) => {
 			getLastVoting(clan._id).then(d => {
 
 				if (d != null && d.votingActive == true) {
-					if (d == null || d.calenderWeek <= moment(new Date()).tz("Europe/Berlin").toDate().getWeekNumber()) {
+					if (d == null || d.calenderWeek <= new Date().getWeekNumber()) {
 
 						if (clanDay < day ||
 							(clanDay == day &&
@@ -197,7 +196,7 @@ const checkVotingEnds = async (allClans) => {
 };
 const checkLedger = async allClans => {
 	for (const clan of allClans) {
-		const ledgerTime = moment(new Date()).tz("Europe/Berlin").toDate();
+		const ledgerTime = new Date();
 		getLedger(clan.clanId).then(d => {
 			const ledger = d.body;
 			try {
@@ -220,20 +219,20 @@ const checkLedger = async allClans => {
 	}
 };
 const checkQuestStart = async (clan, clanMembers, wolvesvilleClanMembers) => {
-	let day = moment(new Date()).tz("Europe/Berlin").toDate().getDay();
+	let day = new Date().getDay();
 	day -= 1;
 	if (day == -1) {
 		day = 6;
 	}
-	const hour = moment(new Date()).tz("Europe/Berlin").toDate().getHours();
-	const minute = moment(new Date()).tz("Europe/Berlin").toDate().getMinutes();
+	const hour = new Date().getHours();
+	const minute = new Date().getMinutes();
 	if (clan.settings.autoQuestStartEnabled) {
 		const clanDay = parseInt(clan.settings.autoQuestStartTime.slice(0, 1));
 		const clanHour = parseInt(clan.settings.autoQuestStartTime.slice(2, 4));
 		const clanMinute = parseInt(clan.settings.autoQuestStartTime.slice(5, 7)) ;
 		getLastVoting(clan._id).then(async voting => {
 			if (voting != null && voting.questStarted == false) {
-				if (voting == null || voting.calenderWeek <= moment(new Date()).tz("Europe/Berlin").toDate().getWeekNumber()) {
+				if (voting == null || voting.calenderWeek <= new Date().getWeekNumber()) {
 
 					if (clanDay < day ||
 						(clanDay == day &&

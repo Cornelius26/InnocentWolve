@@ -5,7 +5,6 @@ import path from 'path';
 import * as dotenv from 'dotenv';
 
 
-import moment from 'moment-timezone';
 const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname(__filename);
@@ -65,7 +64,7 @@ export const createMember = async (userID, localClanId, discordId) => {
 				authenticationDiscordID: discordId,
 				clanId: localClanId,
 				authenticationCode: authCode,
-				authenticationCodeValidUntil: moment(new Date()).tz("Europe/Berlin").toDate().setDate(moment(new Date()).tz("Europe/Berlin").toDate().getDate() + parseInt(CodeValidDays)),
+				authenticationCodeValidUntil: new Date().setDate(new Date().getDate() + parseInt(CodeValidDays)),
 			});
 			try {
 				newMember.save();
@@ -89,7 +88,7 @@ export const getPendingCodes = async (clanId) => {
 			clanId = clan._id;
 			return ClanMembers.find({
 				clanId: clanId,
-				authenticationCodeValidUntil: { $gt: moment(new Date()).tz("Europe/Berlin").toDate() },
+				authenticationCodeValidUntil: { $gt: new Date() },
 			})
 				.exec()
 				.then(data => {
