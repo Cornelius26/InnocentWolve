@@ -1,7 +1,6 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, SelectMenuBuilder, SlashCommandBuilder } from 'discord.js';
-import { getMember } from '../../MongoRequests/clanMembers.js';
-import { getClanMembers, getWolvesvilleClan } from '../../wolvesVille/WolvesVilleRequests.js';
-import { getClan, setColeaderAccess } from '../../MongoRequests/clans.js';
+import { ActionRowBuilder, SelectMenuBuilder, SlashCommandBuilder } from 'discord.js';
+
+import { setColeaderAccess } from '../../MongoRequests/clans.js';
 import { checkAccessRight } from '../../accessManager.js';
 
 
