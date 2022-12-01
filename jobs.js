@@ -266,7 +266,7 @@ const checkQuestStart = async (clan, clanMembers, wolvesvilleClanMembers) => {
 							let participates = false;
 							for (const voter of voting.questOptions[itemWonIndex].votings) {
 								if (clanMember._id.toString() == voter.clanMemberId._id.toString()) {
-									console.log('found');
+
 									participates = voter.participation;
 								}
 							}
@@ -277,7 +277,6 @@ const checkQuestStart = async (clan, clanMembers, wolvesvilleClanMembers) => {
 								await removeGoldAndGemFromUser(clan._id, clanMember.wolvesvilleId, clan.settings.defaultQuestPriceGold, 0);
 							}
 							if (participates == true) {
-								console.log('activate');
 								await setClanMemberParticipation(clan.clanId, clanMember.wolvesvilleId, participates);
 							}
 						}
