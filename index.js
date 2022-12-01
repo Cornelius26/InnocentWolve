@@ -14,6 +14,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 dotenv.config();
+console.log(process.env.TZ)
+
 const token = process.env.DISCORD_TOKEN;
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
@@ -29,12 +31,12 @@ const getInteractions = async (userPath) => {
 	for (const file of commandFiles) {
 		const filePath = path.join(commandsPath, file);
 		import('file://' + filePath).then((command) => {
-			console.log(command.data.name);
+			//console.log(command.data.name);
 			client.commands.set(command.data.name, command);
 		});
 		// Set a new item in the Collection with the key as the command name and the value as the exported module
 	}
-	console.log(commandDirectories);
+	//console.log(commandDirectories);
 
 	for (const dir of commandDirectories) {
 		await getInteractions(userPath + '/' + dir);
