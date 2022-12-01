@@ -135,7 +135,7 @@ const buildVotingResult = async (voting) => {
 			textPosition += smallMargins + subtitleHeight;
 			context.fillStyle = '#ffdc00';
 			context.font = process.env.ENVIROMENT == 'production' ? `${subtitleHeight}px DejaVu Sans` : `${subtitleHeight}px sans-serif`;
-			const text = voting.questStarted ? 'WINNER' : 'ABOUT TO WIN';
+			const text = !voting.votingActive ? 'WINNER' : 'ABOUT TO WIN';
 			context.fillText(text, leftMargin, textPosition);
 			context.fillStyle = '#ffffff';
 		}
