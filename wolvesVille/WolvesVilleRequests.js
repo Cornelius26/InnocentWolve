@@ -5,6 +5,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 import dotenv from 'dotenv';
+
 superagentRetryDelay(superagent);
 
 const __filename = fileURLToPath(import.meta.url);
@@ -38,16 +39,27 @@ export const getAuthorizedClans = async () => {
 
 };
 
-export const getClanChat = async (id) => {
+export const getClanChat = async (clanId) => {
 	// await waiter(0);
 
 	return superagent
-		.get(URL + routes.clans.get.chat.replace(':0', id))
+		.get(URL + routes.clans.get.chat.replace(':0', clanId))
 		.send() // sends a JSON post body
 		.set('Authorization', API_KEY)
 		.set('Accept', 'application/json')
 		.retry(10, [1000, 2000, 3000, 5000], [401, 404]);
 };
+export const sendClanMessage = async (clanId, message) => {
+	// await waiter(0);
+	return superagent
+		.post(URL + routes.clans.post.chat.replace(':0', clanId))
+		.body({ message: message })
+		.send() // sends a JSON post body
+		.set('Authorization', API_KEY)
+		.set('Accept', 'application/json')
+		.retry(10, [1000, 2000, 3000, 5000], [401, 404]);
+};
+
 export const getClanMembers = async (id) => {
 	// await waiter(0);
 

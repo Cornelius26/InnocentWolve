@@ -197,7 +197,7 @@ const checkVotingEnds = async (allClans) => {
 const checkLedger = async allClans => {
 	for (const clan of allClans) {
 		const ledgerTime = new Date();
-		getLedger(clan.clanId).then(d => {
+		getLedger(clan.clanId).then(async d => {
 			const ledger = d.body;
 			try {
 				for (const ledgerItem of ledger) {
@@ -205,7 +205,7 @@ const checkLedger = async allClans => {
 					if (ledgerItem.type == 'DONATE' &&
 						clan.lastCheckLedger < ledgerItemTime &&
 						ledgerItemTime < ledgerTime) {
-						addDonateGoldAndGemToUser(clan._id, ledgerItem.playerId, ledgerItem.gold, ledgerItem.gems);
+						await addDonateGoldAndGemToUser(clan._id, ledgerItem.playerId, ledgerItem.gold, ledgerItem.gems);
 					}
 				}
 				updateLedgerTime(clan._id, ledgerTime);
