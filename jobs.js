@@ -4,7 +4,7 @@ import {
 	getAuthorizedClans,
 	getClanChat,
 	getClanMembers,
-	getLedger,
+	getLedger, getLogs, sendClanMessage,
 	setClanMemberParticipation,
 } from './wolvesVille/WolvesVilleRequests.js';
 import {
@@ -13,7 +13,7 @@ import {
 	getClansMemberByClanObjectID,
 	getPendingCodes, removeGoldAndGemFromUser,
 } from './MongoRequests/clanMembers.js';
-import { updateClanChatCheck, updateLedgerTime } from './MongoRequests/clans.js';
+import { updateClanChatCheck, updateLedgerTime, updateLogTime } from './MongoRequests/clans.js';
 import { createVoting, endVoting, getLastVoting, setQuestStarted } from './MongoRequests/clanVotings.js';
 
 const deactivateClans = (activeClans, authorizedClans, next) => {
@@ -129,7 +129,7 @@ const checkVotingStarts = async (allClans) => {
 		if (clan.settings.autoNewVotingEnabled) {
 			const clanDay = parseInt(clan.settings.autoVotingTimeStart.slice(0, 1));
 			const clanHour = parseInt(clan.settings.autoVotingTimeStart.slice(2, 4));
-			const clanMinute = parseInt(clan.settings.autoVotingTimeStart.slice(5, 7)) ;
+			const clanMinute = parseInt(clan.settings.autoVotingTimeStart.slice(5, 7));
 			getLastVoting(clan._id).then(d => {
 				if (d == null || d.votingActive == false) {
 					if (d == null || d.calenderWeek < new Date().getWeekNumber()) {
@@ -229,7 +229,7 @@ const checkQuestStart = async (clan, clanMembers, wolvesvilleClanMembers) => {
 	if (clan.settings.autoQuestStartEnabled) {
 		const clanDay = parseInt(clan.settings.autoQuestStartTime.slice(0, 1));
 		const clanHour = parseInt(clan.settings.autoQuestStartTime.slice(2, 4));
-		const clanMinute = parseInt(clan.settings.autoQuestStartTime.slice(5, 7)) ;
+		const clanMinute = parseInt(clan.settings.autoQuestStartTime.slice(5, 7));
 		getLastVoting(clan._id).then(async voting => {
 			if (voting != null && voting.questStarted == false) {
 				if (voting == null || voting.calenderWeek <= new Date().getWeekNumber()) {
@@ -317,6 +317,33 @@ const checkClanMemberChange = async (allClans, nextTask) => {
 	}
 
 };
+const checkLogs = async (allClans) => {
+	for (const clan of allClans) {
+		const logTime = new Date();
+		getLogs(clan.clanId).then(async d => {
+			const logs = d.body;
+			try {
+				for (const logItem of logs) {
+					if (clan.welcomeMessageActive) {
+						const logItemTime = new Date(logItem.creationTime);
+						if (logItem.action == 'PLAYER_JOINED' &&
+							clan.lastCheckLog < logItemTime &&
+							logItemTime < logTime) {
+							await sendClanMessage(clan.clanId, '@' + logItem.playerUsername);
+							await sendClanMessage(clan.clanId, clan.welcomeMessage);
+						}
+					}
+				}
+				updateLogTime(clan._id, logTime);
+			}
+			catch (e) {
+				console.log(e);
+			}
+		}).catch(e => {
+			console.log(e);
+		});
+	}
+};
 /**
  * List of Jobs that are done every
  * five minutes to enable the bot to be up-to-date
@@ -334,6 +361,7 @@ const allJobs = (fireDate) => {
 				checkClanMemberChange(allCurrentClans,
 					checkQuestStart,
 				);
+				checkLogs(allCurrentClans);
 				// remove old clans
 			});
 		});

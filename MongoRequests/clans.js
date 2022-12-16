@@ -120,3 +120,10 @@ export const updateLedgerTime = (clan_id, time) => {
 		return clan.save();
 	});
 };
+
+export const updateLogTime = (clan_id, time) => {
+	return Clans.findById(clan_id).exec().then(clan => {
+		clan.lastCheckLog = time;
+		return clan.save();
+	});
+};

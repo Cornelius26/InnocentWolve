@@ -7,7 +7,10 @@ const clansSchema = new Schema({
 	guildId: { type: String, default: null, unique: true },
 	lastCheckLedger: { type: Date, required: true, default: new Date() },
 	lastCheckChat: { type: Date, required: true, default: new Date() },
+	lastCheckLog: { type: Date, required: true, default: new Date() },
 	clanActive: { type: Boolean, required: true, default: true },
+	welcomeMessageActive: { type: Boolean, default: false, required: true },
+	welcomeMessage: { type: Boolean, default: '', required: true },
 	clanInactiveSince: { type: Date },
 	settings: {
 		autoQuestStartEnabled: { type: Boolean, default: true, required: true },

@@ -117,6 +117,15 @@ export const getLedger = async (clanId) => {
 		.set('Accept', 'application/json')
 		.retry(10, [1000, 2000, 3000, 5000], [401, 404]);
 };
+export const getLogs = async (clanId) => {
+	// await waiter(0);
+	return superagent
+		.get(URL + routes.clans.get.logs.replace(':0', clanId))
+		.send() // sends a JSON post body
+		.set('Authorization', API_KEY)
+		.set('Accept', 'application/json')
+		.retry(10, [1000, 2000, 3000, 5000], [401, 404]);
+};
 export const setClanMemberParticipation = async (clanId, clanMemberId, participation) => {
 	return superagent
 		.put(URL + routes.clans.put.participateInQuest.replace(':0', clanId).replace(':1', clanMemberId))

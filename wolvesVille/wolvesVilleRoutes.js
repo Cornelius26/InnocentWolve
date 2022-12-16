@@ -30,6 +30,7 @@ const active = '/clans/:0/quests/active';
 const history = '/clans/:0/quests/history';
 const all = '/clans/quests/all';
 const authorized = '/clans/authorized';
+const logs = '/clans/:0/logs';
 
 // POST : send request to server
 const chatPOST = '/clans/:0/chat';
@@ -83,6 +84,7 @@ export default {
 			history,
 			all,
 			authorized,
+			logs,
 		}, post: {
 			chat: chatPOST,
 			shuffle,
