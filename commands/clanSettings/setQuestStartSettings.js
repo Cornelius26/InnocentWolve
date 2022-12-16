@@ -1,6 +1,5 @@
 import {
 	ActionRowBuilder,
-	ButtonStyle,
 	SelectMenuBuilder,
 	SlashCommandBuilder,
 } from 'discord.js';

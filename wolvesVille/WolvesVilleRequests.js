@@ -53,8 +53,7 @@ export const sendClanMessage = async (clanId, message) => {
 	// await waiter(0);
 	return superagent
 		.post(URL + routes.clans.post.chat.replace(':0', clanId))
-		.body({ message: message })
-		.send() // sends a JSON post body
+		.send({ message: message }) // sends a JSON post body
 		.set('Authorization', API_KEY)
 		.set('Accept', 'application/json')
 		.retry(10, [1000, 2000, 3000, 5000], [401, 404]);
