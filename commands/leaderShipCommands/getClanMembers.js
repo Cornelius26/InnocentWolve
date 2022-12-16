@@ -41,7 +41,8 @@ export const execute = async (interaction) => {
 				interaction.editReply({ content: 'You have no access to this command.', ephemeral: true });
 			}
 		});
-	} catch (e) {
+	}
+	catch (e) {
 		console.log(e);
 		interaction.editReply({
 			content: 'You have no access to the bot or a internal error accured.',
@@ -67,13 +68,17 @@ const getAllClanUsersInformation = async (clanId, wolvesvilleId) => {
 			count++;
 		}
 		if (memberIndex != -1) {
-			replyText.push([clanMember.username, '✔', botMembers[memberIndex].goldBalance.toString(), botMembers[memberIndex].gemsBalance.toString()]);
+			replyText.push([clanMember.username, '✔', botMembers[memberIndex].goldBalance, botMembers[memberIndex].gemsBalance]);
 		}
 		else {
-			replyText.push([clanMember.username, '❌', '-----', '-----']);
+			replyText.push([clanMember.username, '❌', 0, 0]);
 		}
 
 	}
+	replyText.sort((a, b) => {
+		return a[2] - b[2];
+	});
+
 	const textSize = 12;
 	const canvas = createCanvas(250, 15 * replyText.length + 10);
 	const context = canvas.getContext('2d');
@@ -90,8 +95,8 @@ const getAllClanUsersInformation = async (clanId, wolvesvilleId) => {
 		}
 		context.fillText(text[1], 115, start);
 		context.font = process.env.ENVIROMENT == 'production' ? `${textSize}px DejaVu Sans` : `${textSize}px sans-serif`;
-		context.fillText(text[2], 155, start);
-		context.fillText(text[3], 205, start);
+		context.fillText(text[2].toString(), 155, start);
+		context.fillText(text[3].toString(), 205, start);
 		start += 15;
 	}
 	return new AttachmentBuilder(canvas.toBuffer('image/png'), { name: 'profile-image.png' });
