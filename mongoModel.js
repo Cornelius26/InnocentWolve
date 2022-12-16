@@ -10,7 +10,7 @@ const clansSchema = new Schema({
 	lastCheckLog: { type: Date, required: true, default: new Date() },
 	clanActive: { type: Boolean, required: true, default: true },
 	welcomeMessageActive: { type: Boolean, default: false, required: true },
-	welcomeMessage: { type: Boolean, default: '', required: true },
+	welcomeMessage: { type: String, default: '', required: true },
 	clanInactiveSince: { type: Date },
 	settings: {
 		autoQuestStartEnabled: { type: Boolean, default: true, required: true },
