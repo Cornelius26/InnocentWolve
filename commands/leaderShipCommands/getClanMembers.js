@@ -85,7 +85,9 @@ const getAllClanUsersInformation = async (clanId, wolvesvilleId) => {
 	let start = 17;
 	for (const text of replyText) {
 		context.fillText(text[0], 5, start);
-		context.font = process.env.ENVIROMENT == 'production' ? `${textSize}px Noto Color Emoji` : `${textSize}px sans-serif`;
+		if (start != 17) {
+			context.font = process.env.ENVIROMENT == 'production' ? `${textSize}px Noto Color Emoji` : `${textSize}px sans-serif`;
+		}
 		context.fillText(text[1], 115, start);
 		context.font = process.env.ENVIROMENT == 'production' ? `${textSize}px DejaVu Sans` : `${textSize}px sans-serif`;
 		context.fillText(text[2], 155, start);
