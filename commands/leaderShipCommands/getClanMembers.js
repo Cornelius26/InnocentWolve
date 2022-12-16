@@ -67,15 +67,15 @@ const getAllClanUsersInformation = async (clanId, wolvesvilleId) => {
 			count++;
 		}
 		if (memberIndex != -1) {
-			replyText.push([clanMember.username, '✔', botMembers[memberIndex].goldBalance, botMembers[memberIndex].gemsBalance]);
+			replyText.push([clanMember.username, '✔', botMembers[memberIndex].goldBalance, botMembers[memberIndex].gemsBalance, 1]);
 		}
 		else {
-			replyText.push([clanMember.username, '❌', 0, 0]);
+			replyText.push([clanMember.username, '❌', 0, 0, 0]);
 		}
 
 	}
 	replyText.sort((a, b) => {
-		return b[2] - a[2];
+		return b[4] - a[4];
 	});
 
 	const textSize = 12;
