@@ -147,6 +147,7 @@ const checkVotingStarts = async (allClans) => {
 						) {
 							createVoting(clan.clanId, clan._id).then(() => {
 								console.log('voting created');
+								sendClanMessage(clan.clanId, 'I have started the voting for the new quest. Go to your Discord server to vote for your favorite quest.');
 							});
 						}
 					}
@@ -186,6 +187,8 @@ const checkVotingEnds = async (allClans) => {
 						) {
 							endVoting(d._id).then(() => {
 								console.log('voting ended');
+
+								sendClanMessage(clan.clanId, 'The voting has ended. Go to your discord server and use /voting_result to see the results.');
 							});
 						}
 					}
@@ -209,8 +212,7 @@ const checkLedger = async allClans => {
 					}
 				}
 				updateLedgerTime(clan._id, ledgerTime);
-			}
-			catch (e) {
+			} catch (e) {
 				console.log(e);
 			}
 		}).catch(e => {
@@ -335,8 +337,7 @@ const checkLogs = async (allClans) => {
 					}
 				}
 				updateLogTime(clan._id, logTime);
-			}
-			catch (e) {
+			} catch (e) {
 				console.log(e);
 			}
 		}).catch(e => {
