@@ -22,6 +22,13 @@ export const getMember = async (id) => {
 		throw new Error(err);
 	});
 };
+export const getMemberOfClan = async (clanId) => {
+	return ClanMembers.find({ clanId: clanId }).populate('clanId').exec().then(data => {
+		return data;
+	}).catch(err => {
+		throw new Error(err);
+	});
+};
 export const getClansMemberByClanObjectID = async (id) => {
 	return ClanMembers.find({ clanId: id }).populate('clanId').exec().then(data => {
 		return data;
