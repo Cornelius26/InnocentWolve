@@ -41,8 +41,7 @@ export const execute = async (interaction) => {
 				interaction.editReply({ content: 'You have no access to this command.', ephemeral: true });
 			}
 		});
-	}
-	catch (e) {
+	} catch (e) {
 		console.log(e);
 		interaction.editReply({
 			content: 'You have no access to the bot or a internal error accured.',
@@ -76,7 +75,7 @@ const getAllClanUsersInformation = async (clanId, wolvesvilleId) => {
 
 	}
 	replyText.sort((a, b) => {
-		return a[2] - b[2];
+		return b[2] - a[2];
 	});
 
 	const textSize = 12;
