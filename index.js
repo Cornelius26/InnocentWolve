@@ -72,7 +72,7 @@ client.on(Events.InteractionCreate, interaction => {
 });
  */
 
-schedule.scheduleJob('*/1 * * * *', (fireDate) => {
+schedule.scheduleJob('*/2 * * * *', (fireDate) => {
 	console.log('jobs updated');
 	allJobs(fireDate);
 });

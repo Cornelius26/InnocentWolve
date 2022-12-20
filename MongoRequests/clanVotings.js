@@ -53,7 +53,6 @@ export const addUpdateVoting = async (voteId, userId, option, voting) => {
 	console.log(voting);
 	return QuestVotings.findById(voteId).exec().then(foundVoting => {
 		for (const questOption of foundVoting.questOptions) {
-			console.log('Found');
 			if (questOption.id == option) {
 				let found = false;
 				for (const givenVoting of questOption.votings) {
@@ -71,7 +70,6 @@ export const addUpdateVoting = async (voteId, userId, option, voting) => {
 						break;
 					}
 				}
-				console.log('b');
 				if (!found) {
 					if (voting.votedFor == null) {
 						voting.votedFor = false;
