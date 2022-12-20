@@ -102,13 +102,35 @@ const answerButtons = (clanVotings, userId) => {
 		}
 		return arrayOfButtons;
 	};
+	const resultArrayVoting = getButtons('voting');
+	const resultArrayParticipation = getButtons('participation');
 
-	return [
-		new ActionRowBuilder()
-			.addComponents(getButtons('voting')),
-		new ActionRowBuilder()
-			.addComponents(getButtons('participation')),
-	];
+	const actionRowArray = [];
+	const localArray = [];
+	for (const votingButton of resultArrayVoting) {
+		if (localArray.length % 5 === 0 && localArray.length !== 0) {
+			actionRowArray.push(new ActionRowBuilder()
+				.addComponents(localArray));
+			localArray.length = 0;
+		}
+		localArray.push(votingButton);
+	}
+	actionRowArray.push(new ActionRowBuilder()
+		.addComponents(localArray));
+	localArray.length = 0;
+
+	for (const votingButton of resultArrayParticipation) {
+		if (localArray.length % 5 === 0 && localArray.length !== 0) {
+			actionRowArray.push(new ActionRowBuilder()
+				.addComponents(localArray));
+			localArray.length = 0;
+		}
+		localArray.push(votingButton);
+
+	}
+	actionRowArray.push(new ActionRowBuilder()
+		.addComponents(localArray));
+	return actionRowArray;
 
 };
 
@@ -173,7 +195,7 @@ const votingOverviewImage = async (clanVotings, userId) => {
 	// context.arc(125, 125, 100, 0, Math.PI * 2, true);
 	// context.closePath();
 	// context.clip();
-	let c=0
+	const c = 0;
 	for (const image in images) {
 		context.drawImage(images[image], 0, images[image].height * image, images[image].width, images[image].height);
 		context.strokeStyle = '#000000';

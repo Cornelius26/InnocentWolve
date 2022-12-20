@@ -19,6 +19,7 @@ import { createVoting, endVoting, getLastVoting, setQuestStarted } from './Mongo
 const deactivateClans = (activeClans, authorizedClans, next) => {
 	for (let i = 0; i < activeClans.length; i++) {
 		const checkMissingClan = (obj) => obj.id === activeClans[i].clanId;
+
 		if (!authorizedClans.some(checkMissingClan)) {
 			console.log('Removed ' + activeClans[i].clanId);
 			clanRequests.deactivateClan(activeClans[i].clanId);
@@ -338,6 +339,7 @@ const checkLogs = async (allClans) => {
 				}
 				updateLogTime(clan._id, logTime);
 			} catch (e) {
+				console.log(logs)
 				console.log(e);
 			}
 		}).catch(e => {

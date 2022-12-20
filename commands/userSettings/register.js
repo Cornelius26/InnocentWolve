@@ -13,7 +13,6 @@ export const data = new SlashCommandBuilder()
 			.setRequired(true),
 	);
 export const execute = async (interaction) => {
-
 	const username = interaction.options.get('username').value;
 	await interaction.deferReply({ ephemeral: true });
 	checkUserRegisterState(interaction, username).then(([state, clanId, userId]) => {
@@ -53,6 +52,7 @@ export const execute = async (interaction) => {
 			response(interaction, false, 'You are currently not a member of a Wolvesville Clan');
 			break;
 		default:
+			console.log(state);
 			response(interaction, false, 'A Error occured. Please contact a developer');
 			// report error
 			break;
@@ -87,8 +87,6 @@ const checkUserRegisterState = async (interaction, username) => {
 					}
 				}
 				else if (clandata.guildId != interaction.guildId) {
-
-					console.log('hi');
 					if (wolvesVilleClanData.body.leaderId == wolvesVilleUserdata.body.id) {
 						return setClanDiscordId(wolvesVilleUserdata.body.clanId, interaction.guildId).then(d => {
 							return ['leaderRegisteredClan', clandata._id, wolvesVilleUserdata.body.id];
