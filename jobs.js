@@ -335,6 +335,13 @@ const checkLogs = async (allClans) => {
 							await sendClanMessage(clan.clanId, '@' + logItem.playerUsername);
 							await sendClanMessage(clan.clanId, clan.welcomeMessage);
 						}
+						if (logItem.action == 'JOIN_REQUEST_ACCEPTED' &&
+							clan.lastCheckLog < logItemTime &&
+							logItemTime < logTime) {
+							await sendClanMessage(clan.clanId, '@' + logItem.targetPlayerUsername);
+							await sendClanMessage(clan.clanId, clan.welcomeMessage);
+						}
+
 					}
 				}
 				updateLogTime(clan._id, logTime);
