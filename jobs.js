@@ -133,8 +133,9 @@ const checkVotingStarts = async (allClans) => {
 			const clanMinute = parseInt(clan.settings.autoVotingTimeStart.slice(5, 7));
 			getLastVoting(clan._id).then(d => {
 				if (d == null || d.votingActive == false) {
-					if (d == null || d.calenderWeek < new Date().getWeekNumber()) {
-
+					if (d == null || d.calenderWeek < new Date().getWeekNumber() ||
+						//new year case
+						(new Date().getWeekNumber() == 1 && d.calenderWeek > 40)) {;
 						if (clanDay < day ||
 							(clanDay == day &&
 								(
@@ -148,7 +149,9 @@ const checkVotingStarts = async (allClans) => {
 						) {
 							createVoting(clan.clanId, clan._id).then(() => {
 								console.log('voting created');
-								sendClanMessage(clan.clanId, 'I have started the voting for the new quest. Go to your Discord server to vote for your favorite quest.');
+								if (process.env.ENVIROMENT != 'test') {
+									sendClanMessage(clan.clanId, 'I have started the voting for the new quest. Go to your Discord server to vote for your favorite quest.');
+								}
 							});
 						}
 					}
@@ -188,8 +191,9 @@ const checkVotingEnds = async (allClans) => {
 						) {
 							endVoting(d._id).then(() => {
 								console.log('voting ended');
-
-								sendClanMessage(clan.clanId, 'The voting has ended. Go to your discord server and use /voting_result to see the results.');
+								if (process.env.ENVIROMENT != 'test') {
+									sendClanMessage(clan.clanId, 'The voting has ended. Go to your discord server and use /voting_result to see the results.');
+								}
 							});
 						}
 					}
@@ -331,13 +335,15 @@ const checkLogs = async (allClans) => {
 						const logItemTime = new Date(logItem.creationTime);
 						if (logItem.action == 'PLAYER_JOINED' &&
 							clan.lastCheckLog < logItemTime &&
-							logItemTime < logTime) {
+							logItemTime < logTime &&
+							process.env.ENVIROMENT != 'test') {
 							await sendClanMessage(clan.clanId, '@' + logItem.playerUsername);
 							await sendClanMessage(clan.clanId, clan.welcomeMessage);
 						}
 						if (logItem.action == 'JOIN_REQUEST_ACCEPTED' &&
 							clan.lastCheckLog < logItemTime &&
-							logItemTime < logTime) {
+							logItemTime < logTime &&
+							process.env.ENVIROMENT != 'test') {
 							await sendClanMessage(clan.clanId, '@' + logItem.targetPlayerUsername);
 							await sendClanMessage(clan.clanId, clan.welcomeMessage);
 						}
@@ -346,7 +352,7 @@ const checkLogs = async (allClans) => {
 				}
 				updateLogTime(clan._id, logTime);
 			} catch (e) {
-				console.log(logs)
+				console.log(logs);
 				console.log(e);
 			}
 		}).catch(e => {
