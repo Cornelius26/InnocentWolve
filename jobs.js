@@ -280,7 +280,7 @@ const checkQuestStart = async (clan, clanMembers, wolvesvilleClanMembers) => {
 
 							if (participates == true) {
 								if (voting.questOptions[itemWonIndex].purchasableWithGems) {
-									await removeGoldAndGemFromUser(clan._id, clanMember.wolvesvilleId, 0, clan.settings.defaultQuestPriceGold);
+									await removeGoldAndGemFromUser(clan._id, clanMember.wolvesvilleId, 0, clan.settings.defaultQuestPriceGem);
 								}
 								else {
 									await removeGoldAndGemFromUser(clan._id, clanMember.wolvesvilleId, clan.settings.defaultQuestPriceGold, 0);
