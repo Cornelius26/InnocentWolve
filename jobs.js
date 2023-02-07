@@ -134,8 +134,7 @@ const checkVotingStarts = async (allClans) => {
 			getLastVoting(clan._id).then(d => {
 				if (d == null || d.votingActive == false) {
 					if (d == null || d.calenderWeek < new Date().getWeekNumber() ||
-						//new year case
-						(new Date().getWeekNumber() == 1 && d.calenderWeek > 40)) {;
+						(new Date().getWeekNumber() == 1 && d.calenderWeek > 40)) {
 						if (clanDay < day ||
 							(clanDay == day &&
 								(

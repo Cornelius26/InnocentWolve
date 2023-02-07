@@ -107,7 +107,9 @@ const answerButtons = (clanVotings, userId) => {
 
 	const actionRowArray = [];
 	const localArray = [];
+
 	for (const votingButton of resultArrayVoting) {
+
 		if (localArray.length % 5 === 0 && localArray.length !== 0) {
 			actionRowArray.push(new ActionRowBuilder()
 				.addComponents(localArray));
@@ -120,6 +122,8 @@ const answerButtons = (clanVotings, userId) => {
 	localArray.length = 0;
 
 	for (const votingButton of resultArrayParticipation) {
+
+		a += 1;
 		if (localArray.length % 5 === 0 && localArray.length !== 0) {
 			actionRowArray.push(new ActionRowBuilder()
 				.addComponents(localArray));

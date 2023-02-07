@@ -6,8 +6,8 @@ export const getLastVoting = async (clanId) => {
 	return QuestVotings.findOne({ votingForClan: clanId }).sort({ votingStarted: -1 }).populate('questOptions.votings.clanMemberId').exec().then(d => {
 		return d;
 	}).catch(e => {
-		throw new Error(e);
-	},
+			throw new Error(e);
+		},
 	);
 };
 export const getLastVotingWeek = async (clanId, week) => {
@@ -32,18 +32,27 @@ export const createVoting = async (wolvesVilleClanId, clanId) => {
 	getQuestes(wolvesVilleClanId).then(d => {
 		const questOptions = [];
 		for (const quest of d.body) {
-			questOptions.push({
-				id: quest.id,
-				purchasableWithGems: quest.purchasableWithGems,
-				promoImagePrimaryColor: quest.promoImagePrimaryColor,
-				promoImageUrl: quest.promoImageUrl,
-				questParticipants: [],
-				votings: [],
-			});
+			let found = false;
+			for (const q of questOptions) {
+				if (quest.id == q.id) {
+					found = true;
+				}
+			}
+			if (!found) {
+				questOptions.push({
+					id: quest.id,
+					purchasableWithGems: quest.purchasableWithGems,
+					promoImagePrimaryColor: quest.promoImagePrimaryColor,
+					promoImageUrl: quest.promoImageUrl,
+					questParticipants: [],
+					votings: [],
+				});
+			}
 		}
 		const voting = new QuestVotings({
 			votingForClan: clanId,
 			calenderWeek: new Date().getWeekNumber(),
+			year: new Date().getFullYear(),
 			questOptions: questOptions,
 		});
 		voting.save();
@@ -61,11 +70,15 @@ export const addUpdateVoting = async (voteId, userId, option, voting) => {
 						found = true;
 						if (voting.participation == null) {
 							givenVoting.votedFor = voting.votedFor;
-							if (givenVoting.votedFor == true) {givenVoting.participation = true;}
+							if (givenVoting.votedFor == true) {
+								givenVoting.participation = true;
+							}
 						}
 						if (voting.votedFor == null) {
 							givenVoting.participation = voting.participation;
-							if (givenVoting.participation == false) {givenVoting.votedFor = false;}
+							if (givenVoting.participation == false) {
+								givenVoting.votedFor = false;
+							}
 						}
 						break;
 					}

@@ -66,6 +66,7 @@ const questVotingsSchema = new Schema({
 	questStarted: { type: Boolean, required: true, default: false },
 	questWon: { type: Number },
 	questStartedDate: { type: Date },
+	year: { type: Number, required: true },
 	questOptions: [
 		{
 			id: { type: String, required: true },
