@@ -123,7 +123,6 @@ const answerButtons = (clanVotings, userId) => {
 
 	for (const votingButton of resultArrayParticipation) {
 
-		a += 1;
 		if (localArray.length % 5 === 0 && localArray.length !== 0) {
 			actionRowArray.push(new ActionRowBuilder()
 				.addComponents(localArray));
