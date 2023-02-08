@@ -31,8 +31,8 @@ const clansSchema = new Schema({
 export const clans = mongoose.model('clans', clansSchema);
 
 const clanMembersSchema = new Schema({
-	wolvesvilleId: { type: String, required: true, unique: true },
-	discordId: { type: String, unique: true },
+	wolvesvilleId: { type: String, required: true, unique: true, sparse: true },
+	discordId: { type: String, unique: true, sparse: true },
 	currentClanMember: { type: Boolean, required: true, default: true },
 	clanLeft: { type: Date },
 	clanId: { type: Schema.Types.ObjectId, ref: 'clans', required: true },
