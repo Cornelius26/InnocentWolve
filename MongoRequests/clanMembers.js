@@ -115,6 +115,7 @@ export const activateMember = (_id) => {
 		clanMember.authenticated = true;
 		clanMember.authenticationCode = null;
 		clanMember.authenticationCodeValidUntil = null;
+		console.log(clanMember)
 		clanMember.save();
 	});
 };
