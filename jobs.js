@@ -87,7 +87,7 @@ const readClanChat = (existingClans) => {
 					for (const message of chatData) {
 						if (new Date(message.date) < pendingClanMember.authenticationCodeValidUntil) {
 							if (new Date(message.date) > existingClans[i].lastCheckChat) {
-								if (message.msg == pendingClanMember.authenticationCode) {
+								if (message.msg.trim() == pendingClanMember.authenticationCode) {
 									console.log(3);
 									if (message.playerId == pendingClanMember.wolvesvilleId) {
 										activateMember(pendingClanMember._id);
