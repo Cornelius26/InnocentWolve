@@ -76,8 +76,7 @@ export const createMember = async (userID, localClanId, discordId) => {
 			try {
 				newMember.save();
 				return authCode;
-			}
-			catch (err) {
+			} catch (err) {
 				throw new Error(err);
 			}
 		});
@@ -109,20 +108,30 @@ export const getPendingCodes = async (clanId) => {
 
 };
 export const activateMember = (_id) => {
+	console.log('about_to_activate');
 	ClanMembers.findById(_id).exec().then(clanMember => {
-		clanMember.discordId = clanMember.authenticationDiscordID;
-		clanMember.authenticationDiscordID = null;
-		clanMember.authenticated = true;
-		clanMember.authenticationCode = null;
-		clanMember.authenticationCodeValidUntil = null;
-		console.log(clanMember)
+		console.log(clanMember);
+		ClanMembers.update(_id,
+			{
+				discordId: clanMember.authenticationDiscordID,
+				authenticationDiscordID: null,
+				authenticated: true,
+				authenticationCode: null,
+				authenticationCodeValidUntil: null,
+			}, (err, done) => {
+				console.log(err);
+				console.log(done);
+			});
+
 		clanMember.save();
 	});
 };
 
 export const addDonateGoldAndGemToUser = async (_clanId, wolvesVilleId, gold, gems) => {
 	return ClanMembers.findOne({ clanId: _clanId, wolvesvilleId: wolvesVilleId }).exec().then(member => {
-		if (member == null) {return null;}
+		if (member == null) {
+			return null;
+		}
 		member.goldDonated += gold;
 		member.goldBalance += gold;
 		member.gemsDonated += gems;
