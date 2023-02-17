@@ -31,8 +31,13 @@ const clansSchema = new Schema({
 export const clans = mongoose.model('clans', clansSchema);
 
 const clanMembersSchema = new Schema({
-	wolvesvilleId: { type: String, required: true, unique: true, index: true, sparse: true },
-	discordId: { type: String, unique: true, index: true, sparse: true },
+	wolvesvilleId: {
+		type: String,
+		required: true,
+	},
+	discordId: {
+		type: String,
+	},
 	currentClanMember: { type: Boolean, required: true, default: true },
 	clanLeft: { type: Date },
 	clanId: { type: Schema.Types.ObjectId, ref: 'clans', required: true },
@@ -53,8 +58,24 @@ const clanMembersSchema = new Schema({
 	authenticationCodeValidUntil: { type: Date },
 });
 
-export const clanMembers = mongoose.model('clanMembers', clanMembersSchema);
 
+export const clanMembers = mongoose.model('clanMembers', clanMembersSchema);
+clanMembers.collection.createIndex('discordId', {
+	unique: true,
+	partialFilterExpression: {
+		'discordId': {
+			$type: 'string',
+		},
+	},
+});
+clanMembers.collection.createIndex('wolvesvilleId', {
+	unique: true,
+	partialFilterExpression: {
+		'wolvesvilleId': {
+			$type: 'string',
+		},
+	},
+});
 
 const questVotingsSchema = new Schema({
 	votingForClan: { type: Schema.Types.ObjectId, ref: 'clans', required: true },
