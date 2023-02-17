@@ -108,21 +108,12 @@ export const getPendingCodes = async (clanId) => {
 
 };
 export const activateMember = (_id) => {
-	console.log('about_to_activate');
 	ClanMembers.findById(_id).exec().then(clanMember => {
-		console.log(clanMember);
-		ClanMembers.update(_id,
-			{
-				discordId: clanMember.authenticationDiscordID,
-				authenticationDiscordID: null,
-				authenticated: true,
-				authenticationCode: null,
-				authenticationCodeValidUntil: null,
-			}, (err, done) => {
-				console.log(err);
-				console.log(done);
-			});
-
+		clanMember.discordId = clanMember.authenticationDiscordID;
+		clanMember.authenticationDiscordID = null;
+		clanMember.authenticated = true;
+		clanMember.authenticationCode = null;
+		clanMember.authenticationCodeValidUntil = null;
 		clanMember.save();
 	});
 };
