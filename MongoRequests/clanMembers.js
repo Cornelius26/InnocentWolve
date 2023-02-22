@@ -1,5 +1,5 @@
 import cryptoRandomString from 'crypto-random-string';
-import { clanMembers as ClanMembers, clans as Clans } from '../mongoModel.js';
+import { clanMembers, clanMembers as ClanMembers, clans as Clans } from '../mongoModel.js';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import * as dotenv from 'dotenv';
@@ -107,14 +107,13 @@ export const getPendingCodes = async (clanId) => {
 		});
 
 };
-export const activateMember = (_id) => {
-	ClanMembers.findById(_id).exec().then(clanMember => {
-		clanMember.discordId = clanMember.authenticationDiscordID;
-		clanMember.authenticationDiscordID = null;
-		clanMember.authenticated = true;
-		clanMember.authenticationCode = null;
-		clanMember.authenticationCodeValidUntil = null;
-		clanMember.save();
+export const activateMember = (_id, authenticationDiscordID) => {
+	ClanMembers.findByIdAndUpdate(_id, {
+		discordId: authenticationDiscordID,
+		authenticationDiscordID: null,
+		authenticated: true,
+		authenticationCode: null,
+		authenticationCodeValidUntil: null,
 	});
 };
 

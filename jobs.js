@@ -92,7 +92,7 @@ const readClanChat = (existingClans) => {
 								if (message.msg.trim() == pendingClanMember.authenticationCode) {
 									console.log(3);
 									if (message.playerId == pendingClanMember.wolvesvilleId) {
-										activateMember(pendingClanMember._id);
+										activateMember(pendingClanMember._id, pendingClanMember.authenticationDiscordID);
 										console.log(pendingClanMember._id);
 									}
 								}
