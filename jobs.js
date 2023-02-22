@@ -82,15 +82,12 @@ const readClanChat = (existingClans) => {
 		// console.log(existingClans);
 		getClanChat(existingClans[i].clanId).then(chatData => {
 			chatData = chatData.body;
-			console.log(1);
 			getPendingCodes(existingClans[i].clanId).then(pendingClanMembers => {
-				console.log(2);
 				for (const pendingClanMember of pendingClanMembers) {
 					for (const message of chatData) {
 						if (new Date(message.date) < pendingClanMember.authenticationCodeValidUntil) {
 							if (new Date(message.date) > existingClans[i].lastCheckChat) {
 								if (message.msg.trim() == pendingClanMember.authenticationCode) {
-									console.log(3);
 									if (message.playerId == pendingClanMember.wolvesvilleId) {
 										activateMember(pendingClanMember._id);
 									}
